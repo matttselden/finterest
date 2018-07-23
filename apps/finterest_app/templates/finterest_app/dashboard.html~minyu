@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+    <style>
+        div#search-left{
+            width: 40%;
+        }
+        div#list-left{
+            width: 5%;
+        }
+        .navbar{
+            background-color: #693C5C !important;
+        }
+        .navbar-brand, a.nav-link{
+            color: white !important;
+            font-size: small !important;
+        }        
+        div#nav a{
+            font-size: large !important;
+        }
+        button.btn{
+            color: white !important;
+            border: 1px solid white !important;
+        }
+        ul.nav li.nav-item a{
+            color: white !important;
+            margin-left: 20px;
+            font-size: smaller;
+        }
+        div#main{
+            background-color: #FAE9D9;
+        }
+        div#left{
+            width: 15%;
+            display: inline-block;
+            border-right: 2px solid #F7F8F9;
+            height: 800px;
+            vertical-align: top;
+            background-color: #8ba258;
+        }
+        div#middle{
+            width: 68%;
+            display: inline-block;
+            height: 1000px;
+            border-right: 2px solid #F7F8F9;
+            vertical-align: top;
+
+        }
+        div#right{
+            width: 16%;
+            display: inline-block;
+            height: 800px;
+            vertical-align: top;
+            background-color: #8ba258;
+
+        }
+        div#left b{
+            color: white;
+            margin: 15px;
+
+        }
+        div#right b{
+            color: white;
+            margin: 15px;
+        }
+        div#left li{
+            margin-bottom: -10px;
+            color: white !important;
+
+        }
+        div.row{
+            border: 1px solid red;
+            height: 33%;
+        }
+        div.top a, div.top h5{
+            display: inline-block;
+        }
+        div.top h5{
+            float: left;
+            color: #693C5C;
+            font-weight: bold;
+        }
+        div.top a{
+            float: right;
+            margin-right: 5px;
+            font-size: small;
+            color: rgb(84, 55, 133);
+            margin-top: 5px;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+        #middle{
+            padding: 5px 20px;
+        }
+        div.top{
+            width: 100%;
+            height: 8%;
+            border-bottom: 1px solid red;
+            padding-right: 10px;
+        }
+        div.content{
+            width: 100%;
+            height: 100%;
+            border-bottom: 1px solid red;
+        }
+        div.box{
+            width: 31%;
+            height: 90%;
+            border: 1px solid red;
+            display: inline-block;
+            margin: 0px 5px;
+            vertical-align: top;
+        }
+        div.box img{
+            height: 80%;
+            width: 100%;
+            border-bottom: 1px solid gray;
+        }
+        div#profile img{
+            display: inline-block;
+            vertical-align: top;
+            margin-left: -10px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            margin-top: 5px;
+
+        }
+        div#profile h4{
+            vertical-align: top;
+            width: 80%;
+            color: #693C5C;
+
+
+        }
+        div#profile p{
+            color: #693C5C;
+
+        }
+        div#profile-right{
+            display: inline-block;
+            width: 80%;
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <div id="nav">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light" class="nav">
+                <a class="navbar-brand" href="#">Finterest</a>
+                <div id="search-left"></div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                    <div id="list-left"></div>
+
+                    <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Minyu
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Profile</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                            <a class="nav-link" href="#">Logout</a>
+                        </li>
+                    </ul>
+
+                </div>
+            </nav>
+        </div>
+        <div id="left">
+            <b>Friends</b>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Liberty</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Matt</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Graham</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Reuben</a>
+                </li>
+            </ul>
+        </div>
+        <div id="middle">
+            <div id="profile">
+                <img src="https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png" style="width:80px;height:80px;">
+                <div id="profile-right">
+                    <h4>Minyu's Dashboard</h4>
+                    <p>Bio placeholder</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="top">
+                    <h5>FAVE To Do</h5>
+                    <a href="">Add</a>
+                    <a href="">More</a>
+                </div>
+                <div class="content">
+                    <div class="box">
+                        <img src="https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png">
+                        <div class="desc">
+                            <p>This is the description section!</p>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <img src="https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png">
+                        <div class="desc">
+                            <p>This is the description section!</p>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <img src="https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png">
+                        <div class="desc">
+                            <p>This is the description section!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="top">
+                    <h5>FAVE To Eat</h5>
+                    <a href="">Add</a>
+                    <a href="">More</a>
+                </div>
+                <div class="content">
+                    <div class="box">
+                        <img src="https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png">
+                        <div class="desc">
+                            <p>This is the description section!</p>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <img src="https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png">
+                        <div class="desc">
+                            <p>This is the description section!</p>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <img src="https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png">
+                        <div class="desc">
+                            <p>This is the description section!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="top">
+                    <h5>FAVE Places</h5>
+                    <a href="">Add</a>
+                    <a href="">More</a>
+                </div>
+                <div class="content">
+                    <div class="box">
+                        <img src="https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png">
+                        <div class="desc">
+                            <p>This is the description section!</p>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <img src="https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png">
+                        <div class="desc">
+                            <p>This is the description section!</p>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <img src="https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png">
+                        <div class="desc">
+                            <p>This is the description section!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="right">
+            <b>Explore</b>
+        </div>
+
+    </div>
+    
+</body>
+</html>
