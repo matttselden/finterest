@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Index</title>
+    <title>Add New Fave</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
     <script src="main.js"></script>
@@ -43,7 +43,6 @@
         div#left{
             width: 15%;
             display: inline-block;
-            border-right: 2px solid #F7F8F9;
             height: 800px;
             vertical-align: top;
             background-color: #8ba258;
@@ -51,8 +50,7 @@
         div#middle{
             width: 68%;
             display: inline-block;
-            height: 1000px;
-            border-right: 2px solid #F7F8F9;
+            height: 800px;
             vertical-align: top;
 
         }
@@ -62,7 +60,6 @@
             height: 800px;
             vertical-align: top;
             background-color: #8ba258;
-
         }
         div#left b{
             color: white;
@@ -78,77 +75,31 @@
             color: white !important;
 
         }
-        div.row{
-            border: 1px solid red;
-            height: 33%;
-        }
-        div.top a, div.top h5{
-            display: inline-block;
-        }
-        div.top h5{
-            float: left;
-            color: #693C5C;
-            font-weight: bold;
-        }
-        div.top a{
-            float: right;
-            margin-right: 5px;
-            font-size: small;
-            color: rgb(84, 55, 133);
-            margin-top: 5px;
-            font-weight: bold;
-            text-decoration: underline;
-        }
         #middle{
             padding: 5px 20px;
         }
-        div.top{
-            width: 100%;
-            height: 8%;
-            border-bottom: 1px solid red;
-            padding-right: 10px;
+        div.form-group label{
+            display: block;
         }
-        div.content{
-            width: 100%;
-            height: 100%;
-            border-bottom: 1px solid red;
+        div.form-group textarea{
+            overflow-y: scroll;
         }
-        div.box{
-            width: 31%;
-            height: 90%;
-            border: 1px solid red;
-            display: inline-block;
-            margin: 0px 5px;
-            vertical-align: top;
-        }
-        div.box img{
-            height: 80%;
-            width: 100%;
-            border-bottom: 1px solid gray;
-        }
-        div#profile img{
-            display: inline-block;
-            vertical-align: top;
-            margin-left: -10px;
-            margin-right: 10px;
-            margin-bottom: 10px;
-            margin-top: 5px;
-
-        }
-        div#profile h4{
-            vertical-align: top;
+        div#middle form{
             width: 80%;
+            margin: 3% 0% 0% 10%;
             color: #693C5C;
-
-
         }
-        div#profile p{
-            color: #693C5C;
-
+        div#middle h1{
+            margin: 2%;
+            color: #693C5C
         }
-        div#profile-right{
-            display: inline-block;
-            width: 80%;
+        div#middle form .btn-outline-success{
+            color: #693C5C !important;
+            border: 1px solid #693C5C !important;
+            margin-left: 90%;
+        }
+        .form-group{
+            margin-bottom: 3%;
         }
     </style>
 </head>
@@ -161,7 +112,6 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <form class="form-inline my-2 my-lg-0">
                         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -207,94 +157,40 @@
             </ul>
         </div>
         <div id="middle">
-            <div id="profile">
-                <img src="https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png" style="width:80px;height:80px;">
-                <div id="profile-right">
-                    <h4>Minyu's Dashboard</h4>
-                    <p>Bio placeholder</p>
+            <h1>Add New Fave Item!</h1>
+            <form>
+                <!-- {% csrf_token %} -->
+                <div class="form-group">
+                    <label>Type of Fave:</label>
+                    <select class="form-control">
+                        <option>Activity</option>
+                        <option>Restaurant</option>
+                        <option>Place</option>
+                    </select>
                 </div>
-            </div>
-            <div class="row">
-                <div class="top">
-                    <h5>FAVE To Do</h5>
-                    <a href="">Add</a>
-                    <a href="">More</a>
+                <div class="form-group">
+                    <label>Name of Fave:</label>
+                    <input type="text" class="form-control">
                 </div>
-                <div class="content">
-                    <div class="box">
-                        <img src="https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png">
-                        <div class="desc">
-                            <p>This is the description section!</p>
-                        </div>
-                    </div>
-                    <div class="box">
-                        <img src="https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png">
-                        <div class="desc">
-                            <p>This is the description section!</p>
-                        </div>
-                    </div>
-                    <div class="box">
-                        <img src="https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png">
-                        <div class="desc">
-                            <p>This is the description section!</p>
-                        </div>
-                    </div>
+                <div class="form-group">
+                    <label>City:</label>
+                    <input type="text" class="form-control">
                 </div>
-            </div>
-            <div class="row">
-                <div class="top">
-                    <h5>FAVE To Eat</h5>
-                    <a href="">Add</a>
-                    <a href="">More</a>
+                <div class="form-group">
+                    <label>General Description:</label>
+                    <input type="text" class="form-control">
                 </div>
-                <div class="content">
-                    <div class="box">
-                        <img src="https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png">
-                        <div class="desc">
-                            <p>This is the description section!</p>
-                        </div>
-                    </div>
-                    <div class="box">
-                        <img src="https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png">
-                        <div class="desc">
-                            <p>This is the description section!</p>
-                        </div>
-                    </div>
-                    <div class="box">
-                        <img src="https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png">
-                        <div class="desc">
-                            <p>This is the description section!</p>
-                        </div>
-                    </div>
+                <div class="form-group">
+                    <label>Upload an Image!</label>
+                    <input type="file" name="pic" accept="image/*">
+                    <img href=#>
                 </div>
-            </div>
-            <div class="row">
-                <div class="top">
-                    <h5>FAVE Places</h5>
-                    <a href="">Add</a>
-                    <a href="">More</a>
+                <div class="form-group">
+                    <label>Your Personal Review:</label>
+                    <textarea class="form-control" rows="3"></textarea>
                 </div>
-                <div class="content">
-                    <div class="box">
-                        <img src="https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png">
-                        <div class="desc">
-                            <p>This is the description section!</p>
-                        </div>
-                    </div>
-                    <div class="box">
-                        <img src="https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png">
-                        <div class="desc">
-                            <p>This is the description section!</p>
-                        </div>
-                    </div>
-                    <div class="box">
-                        <img src="https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png">
-                        <div class="desc">
-                            <p>This is the description section!</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                <button type="button" class="btn btn-outline-success">Finish</button>
+            </form>
         </div>
         <div id="right">
             <b>Explore</b>
