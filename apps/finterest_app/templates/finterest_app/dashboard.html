@@ -44,22 +44,21 @@
             width: 15%;
             display: inline-block;
             border-right: 2px solid #F7F8F9;
-            height: 800px;
+            height: 980px;
             vertical-align: top;
             background-color: #8ba258;
         }
         div#middle{
             width: 68%;
             display: inline-block;
-            height: 1000px;
+            height: auto;
             border-right: 2px solid #F7F8F9;
             vertical-align: top;
-
         }
         div#right{
             width: 16%;
             display: inline-block;
-            height: 800px;
+            height: 980px;
             vertical-align: top;
             background-color: #8ba258;
 
@@ -182,7 +181,7 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                            <a class="nav-link" href="#">Logout</a>
+                            <a class="nav-link" href="/logout">Logout</a>
                         </li>
                     </ul>
 
@@ -210,8 +209,8 @@
             <div id="profile">
                 <img src="https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png" style="width:80px;height:80px;">
                 <div id="profile-right">
-                    <h4>Minyu's Dashboard</h4>
-                    <p>Bio placeholder</p>
+                    <h4>{{request.session.first_name}}'s Dashboard</h4>
+                    <p>{{request.session.bio}}</p>
                 </div>
             </div>
             <div class="row">
