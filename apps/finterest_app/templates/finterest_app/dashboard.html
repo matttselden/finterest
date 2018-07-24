@@ -181,7 +181,7 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                            <a class="nav-link" href="#">Logout</a>
+                            <a class="nav-link" href="/logout">Logout</a>
                         </li>
                     </ul>
 
@@ -209,8 +209,8 @@
             <div id="profile">
                 <img src="https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png" style="width:80px;height:80px;">
                 <div id="profile-right">
-                    <h4>Minyu's Dashboard</h4>
-                    <p>Bio placeholder</p>
+                    <h4>{{request.session.first_name}}'s Dashboard</h4>
+                    <p>{{request.session.bio}}</p>
                 </div>
             </div>
             <div class="row">

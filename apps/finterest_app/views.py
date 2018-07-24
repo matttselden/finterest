@@ -12,7 +12,10 @@ def login(request):
     return render(request, 'finterest_app/login.html')
 
 def dashboard(request):
-    return render(request, 'finterest_app/dashboard.html')
+    context = {
+      
+    }
+    return render(request, 'finterest_app/dashboard.html', context)
 
 def addnewfave(request):
     return render(request, 'finterest_app/addnewfave.html')
@@ -23,7 +26,6 @@ def logout(request):
 
 def register(request): 
     print("*" * 50)
-    print("requestData ", request.POST['first_name'])
     errors = User.objects.basic_validator(request.POST)
     for key, value in errors.items():
         print("errors ", value)
@@ -62,4 +64,6 @@ def loginProcess(request):
         logedin_user_list = User.objects.filter(email=request.POST['email'])    
         request.session['first_name'] = logedin_user_list[0].first_name
         request.session['user_id'] = logedin_user_list[0].id
+        request.session['bio'] = logedin_user_list[0].bio
+
         return redirect("/dashboard")
