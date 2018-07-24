@@ -27,7 +27,7 @@ class Favorite(models.Model):
     description = models.CharField(max_length = 255)
     category = models.CharField(max_length = 255)
     favorite_image = models.ImageField()
-    address_id = models.OneToOneField(User, related_name = "favorite_id")
+    address_id = models.OneToOneField(Address, related_name = "favorite_id")
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
 

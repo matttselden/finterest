@@ -43,21 +43,21 @@
         div#left{
             width: 15%;
             display: inline-block;
-            height: 800px;
+            height: 1000px;
             vertical-align: top;
             background-color: #8ba258;
         }
         div#middle{
             width: 68%;
             display: inline-block;
-            height: 800px;
+            height: 1000px;
             vertical-align: top;
 
         }
         div#right{
             width: 16%;
             display: inline-block;
-            height: 800px;
+            height: 1000px;
             vertical-align: top;
             background-color: #8ba258;
         }
@@ -78,9 +78,6 @@
         #middle{
             padding: 5px 20px;
         }
-        div.form-group label{
-            display: block;
-        }
         div.form-group textarea{
             overflow-y: scroll;
         }
@@ -100,6 +97,24 @@
         }
         .form-group{
             margin-bottom: 3%;
+        }
+        .inline{
+            display: inline-block;
+        }
+        .street{
+            width: 40%;
+            margin-right: 3%;
+        }
+        .city{
+            width: 25%;
+            margin-right: 3%;
+        }
+        .state{
+            width: 8%;
+            margin-right: 3%;
+        }
+        .zip{
+            width: 14%;
         }
     </style>
 </head>
@@ -158,38 +173,44 @@
         </div>
         <div id="middle">
             <h1>Add New Fave Item!</h1>
-            <form>
-                <!-- {% csrf_token %} -->
+            <form action="/createfave/" method="post">
+                {% csrf_token %}
                 <div class="form-group">
                     <label>Type of Fave:</label>
-                    <select class="form-control">
-                        <option>Activity</option>
-                        <option>Restaurant</option>
-                        <option>Place</option>
+                    <select class="form-control" name="category">
+                        <option value="activity">Activity</option>
+                        <option value="restaurant">Restaurant</option>
+                        <option value="place">Place</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>Name of Fave:</label>
-                    <input type="text" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label>City:</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" name="name">
                 </div>
                 <div class="form-group">
                     <label>General Description:</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" name="description">
                 </div>
                 <div class="form-group">
                     <label>Upload an Image!</label>
-                    <input type="file" name="pic" accept="image/*">
+                    <input type="file" accept="image/*" name="pic">
                     <img href=#>
                 </div>
                 <div class="form-group">
                     <label>Your Comment:</label>
-                    <textarea class="form-control" rows="3"></textarea>
+                    <textarea class="form-control" rows="3" name="comment"></textarea>
                 </div>
-                <button type="button" class="btn btn-outline-success">Finish</button>
+                <div class="form-group">
+                    <label class="inline street">Street Address:</label>
+                    <label class="inline city">City:</label>
+                    <label class="inline state">State:</label>
+                    <label class="inline zip">Zip:</label>
+                    <input type="text" class="form-control inline street" name="street">
+                    <input type="text" class="form-control inline city" name="city">
+                    <input type="text" class="form-control inline state" name="state">
+                    <input type="text" class="form-control inline zip" name="zip">
+                </div>
+                <button type="submit" class="btn btn-outline-success">Finish</button>
             </form>
         </div>
         <div id="right">

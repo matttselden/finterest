@@ -6,4 +6,5 @@ urlpatterns=[
     url(r'^login/$', views.login),
     url(r'^dashboard/$', views.dashboard),
     url(r'^addnewfave/$', views.addnewfave),
+    url(r'^createfave/$', views.createfave),
 ]
