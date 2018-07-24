@@ -4,6 +4,8 @@ from .models import *
 import bcrypt
 
 def index(request):
+    if 'user_id' not in request.session:
+        request.session['user_id'] = 0
     return render(request, 'finterest_app/index.html')
 
 def login(request):
@@ -14,3 +16,50 @@ def dashboard(request):
 
 def addnewfave(request):
     return render(request, 'finterest_app/addnewfave.html')
+
+def logout(request):
+    request.session.clear()
+    return redirect("/")    
+
+def register(request): 
+    print("*" * 50)
+    print("requestData ", request.POST['first_name'])
+    errors = User.objects.basic_validator(request.POST)
+    for key, value in errors.items():
+        print("errors ", value)
+    
+    if len(errors):
+        for key, value in errors.items():
+            messages.error(request, value)
+    #     request.session['first_name'] = request.POST['first_name']
+    #     request.session['last_name'] = request.POST['last_name']
+    #     request.session['email'] = request.POST['email']
+        return redirect('/login')      
+  
+    # Create addres object
+    else: 
+        # Create user address
+        user_address = Address.objects.create(street_address = request.POST['street_address'] , city=request.POST['city'], state=request.POST['state'], zip_code = request.POST['zip_code'])
+        # Hash password
+        pw_hash = bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt())  
+        # Create new user
+        new_user = User.objects.create(first_name=request.POST['first_name'], last_name=request.POST['last_name'], email=request.POST['email'], password=pw_hash, bio=request.POST['bio'], user_image=request.POST['user_image'], address_id = user_address)    
+        # Save ID and first name to session
+        request.session['user_id'] = new_user.id
+        request.session['first_name'] = new_user.first_name
+        # Return to user dashboard
+        return redirect("/dashboard")
+
+def loginProcess(request):
+    errors = User.objects.login_validator(request.POST)
+
+    if len(errors):
+        for key, value in errors.items():
+            messages.error(request, value)
+        request.session['email'] = request.POST['email']
+        return redirect('/login')
+    else:    
+        logedin_user_list = User.objects.filter(email=request.POST['email'])    
+        request.session['first_name'] = logedin_user_list[0].first_name
+        request.session['user_id'] = logedin_user_list[0].id
+        return redirect("/dashboard")
