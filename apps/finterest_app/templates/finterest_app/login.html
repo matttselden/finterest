@@ -134,12 +134,10 @@
             <!-- <div class="login"> -->
        
            
-        <form class="form-group mb-5" action="/register", method='post'>
-                <!-- {% csrf_token %}  -->
+        <form class="form-group mb-5" action="/register/", method='post'>
+                {% csrf_token %} 
             <h5>Register</h5>
 
-            <label for="first_name">First name:</label>
-            <input type="text" class=" d-inline form-control" id="first_name" name="first_name"> <br>
 
             <label for="first_name">First name:</label>
             <input type="text" class=" d-inline form-control" id="first_name" name="first_name"> <br>
@@ -150,6 +148,18 @@
             <!-- changed from email to test my regex -->
             <input type="email" class=" d-inline form-control" id="email" name="email"><br>
             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+
+            <label for="street_address">Address:</label>
+            <input type="text" class=" d-inline form-control" id="street_address" name="street_address"> <br>
+
+            <label for="city">City:</label>
+            <input type="text" class=" d-inline form-control" id="city" name="city"> <br>
+
+            <label for="state">State:</label>
+            <input type="text" class=" d-inline form-control" id="state" name="state"> <br>
+
+            <label for="zip_code">Zip Code:</label>
+            <input type="text" class=" d-inline form-control" id="zip_code" name="zip_code"> <br>
             
             <label for="password">Password:</label>
             <input type="password" class="d-inline form-control" id="password" name="password" ><br>
@@ -157,7 +167,7 @@
             <label for="confirm_password">Confirm password:</label>
             <input type="password" class="d-inline form-control" id="confirm_password" name="confirm_password"><br>
             
-            <label for="user_image">Upload a profile picture.</label>
+            <label for="user_image">Upload a profile picture.</label><br>
             <input type="file" class="myform" id="user_image" name="user_image" accept="image/*">
             <img href=#><br>
 
@@ -165,10 +175,19 @@
             <textarea class="form-control" rows="3" name="bio" id="bio"></textarea><br>
 
             <button class="btn btn-outline-success my-2 my-sm-0 dark" type="submit">Register</button>
-            
+                       
+        {% if messages %}
+                
+        {% for message in messages %}
+        <p class="alert" role="alert">
+            {{message}}
+        </p>
+        {% endfor %}
+    {% endif %}
         </form>
         
-        <form action="" class="form-group pb-5">
+        <form action="/loginProcess/" class="form-group pb-5", method='post'>
+            {% csrf_token %}
             <h5>Log In</h5>
             <label for="email">Email address:</label>
             <input type="email" class=" d-inline form-control" id="email" name="email"><br>
@@ -179,6 +198,10 @@
             <button class="btn btn-outline-success my-2 my-sm-0 dark mb-5" type="submit">Log In</button>
             
         </form>
+       
+
+       
+
         
                 <!-- End of row -->
             <!-- </div> -->

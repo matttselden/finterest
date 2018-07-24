@@ -2,6 +2,50 @@ from __future__ import unicode_literals
 from django.db import models
 import re
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
+import bcrypt
+
+class UserManager(models.Manager):
+    def basic_validator(self, postData):
+        errors = {}
+        # first name validators
+        if len(postData['first_name']) < 2:
+            errors["first_name"] = "We need your first name please"
+        if not str.isalpha(postData['first_name']): 
+            errors["first_name_letter"] = "Your last name can only consist of letters"    
+        # last name validators
+        if len(postData['last_name']) < 2:
+            errors["last_name"] = "We need your last name please"
+        if not str.isalpha(postData['last_name']): 
+            errors["last_name_letter"] = "Your last name can only consist of letters"     
+        # email validators
+        if not EMAIL_REGEX.match(postData['email']):
+            errors['email_regex'] = "Please submit a valid email address"
+        users_list = User.objects.filter(email= postData['email'])
+        if len(users_list) >  0:
+            errors["email_unique"] = "Your email is already in use"
+        # password validators
+        if len(postData['password']) < 8:
+            errors["password"] = "Your password needs to be at least 8 characters"
+        if postData['password'] != postData['confirm_password']:
+            errors["password"] = "Your passwords do not match"
+             
+        return errors
+
+    def login_validator(self, postData):
+        errors = {}
+        if len(postData['email']) < 1:
+            errors["email"] = "Please enter your email"
+            if len(postData['password']) < 1:
+                errors['password'] = "Please enter your password"  
+          
+        else: 
+            users_list = User.objects.filter(email= postData['email'])
+
+            if (len(users_list) <  1) or not (bcrypt.checkpw(postData['password'].encode(), users_list[0].password.encode())):    
+                errors["password"] = "Your password or email is not correct"
+      
+        return errors
+
 
 class Address(models.Model):
     street_address = models.CharField(max_length = 255)
@@ -16,11 +60,13 @@ class User(models.Model):
     last_name = models.CharField(max_length = 255)
     email = models.CharField(max_length = 255)
     password = models.CharField(max_length = 255)
-    user_image = models.ImageField()
-    bio = models.TextField()
+    user_image = models.ImageField(null=True)
+    bio = models.TextField(null=True)
     address_id = models.ForeignKey(Address, related_name = "user_id")
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
+    objects = UserManager()
+
 
 class Favorite(models.Model):
     name = models.CharField(max_length = 255)
