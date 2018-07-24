@@ -23,6 +23,10 @@
             border-color: #693C5C; 
         }
 
+        label.myform {
+            margin-top: .375rem;
+        }
+
         /* Original styling */
         form.form-group {
             margin: 24px auto;
@@ -130,45 +134,52 @@
             <!-- <div class="login"> -->
        
            
-                <form class="form-group mb-5" action="/register", method='post'>
-                        <!-- {% csrf_token %}  -->
-                    <h5>Register</h5>
-                    <label for="first_name">First name:</label>
-                    <input type="text" class=" d-inline form-control" id="first_name" name="first_name"> <br>
+        <form class="form-group mb-5" action="/register", method='post'>
+                <!-- {% csrf_token %}  -->
+            <h5>Register</h5>
 
-                    <label for="first_name">First name:</label>
-                    <input type="text" class=" d-inline form-control" id="first_name" name="first_name"> <br>
-                    
-                        
-                    
-                    <label for="last_name">Last name:</label>
-                    <input type="text" class=" d-inline form-control" id="last_name" name="last_name"><br>
-                    <label for="email">Email address:</label>
-                    <!-- changed from email to test my regex -->
-                    <input type="email" class=" d-inline form-control" id="email" name="email"><br>
-                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                    
-                    <label for="password">Password:</label>
-                    <input type="password" class="d-inline form-control" id="password" name="password" ><br>
-                    
-                    <label for="confirm_password">Confirm password:</label>
-                    <input type="password" class="d-inline form-control mb-3" id="confirm_password" name="confirm_password"><br>
-                    <button class="btn btn-outline-success my-2 my-sm-0 dark" type="submit">Register</button>
-                    
-                </form>
-                
-                <form action="" class="form-group pb-5">
-                    <h5>Log In</h5>
-                    <label for="email">Email address:</label>
-                    <input type="email" class=" d-inline form-control" id="email" name="email"><br>
-                    
-                    
-                    <label for="password">Password:</label>
-                    <input type="password" class="d-inline form-control mb-3" id="password" name="password" ><br>
-                    <button class="btn btn-outline-success my-2 my-sm-0 dark mb-5" type="submit">Log In</button>
-                    
-                </form>
-                
+            <label for="first_name">First name:</label>
+            <input type="text" class=" d-inline form-control" id="first_name" name="first_name"> <br>
+
+            <label for="first_name">First name:</label>
+            <input type="text" class=" d-inline form-control" id="first_name" name="first_name"> <br>
+            
+            <label for="last_name">Last name:</label>
+            <input type="text" class=" d-inline form-control" id="last_name" name="last_name"><br>
+            <label for="email">Email address:</label>
+            <!-- changed from email to test my regex -->
+            <input type="email" class=" d-inline form-control" id="email" name="email"><br>
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            
+            <label for="password">Password:</label>
+            <input type="password" class="d-inline form-control" id="password" name="password" ><br>
+            
+            <label for="confirm_password">Confirm password:</label>
+            <input type="password" class="d-inline form-control" id="confirm_password" name="confirm_password"><br>
+            
+            <label for="user_image">Upload a profile picture.</label>
+            <input type="file" class="myform" id="user_image" name="user_image" accept="image/*">
+            <img href=#><br>
+
+            <label for="bio" class="myform">Your bio:</label>
+            <textarea class="form-control" rows="3" name="bio" id="bio"></textarea><br>
+
+            <button class="btn btn-outline-success my-2 my-sm-0 dark" type="submit">Register</button>
+            
+        </form>
+        
+        <form action="" class="form-group pb-5">
+            <h5>Log In</h5>
+            <label for="email">Email address:</label>
+            <input type="email" class=" d-inline form-control" id="email" name="email"><br>
+            
+            
+            <label for="password">Password:</label>
+            <input type="password" class="d-inline form-control mb-3" id="password" name="password" ><br>
+            <button class="btn btn-outline-success my-2 my-sm-0 dark mb-5" type="submit">Log In</button>
+            
+        </form>
+        
                 <!-- End of row -->
             <!-- </div> -->
             <!-- End of login -->
