@@ -14,6 +14,9 @@ def login(request):
 def dashboard(request):
     context = {
         'user': User.objects.get(id=request.session['user_id']),
+        'activities': Favorite.objects.filter(category='activity').order_by('-id')[:3],
+        'comments': Comment.objects.all()
+
     }
     return render(request, 'finterest_app/dashboard.html', context)
 
@@ -21,12 +24,18 @@ def addnewfave(request):
     return render(request, 'finterest_app/addnewfave.html')
 
 def createfave(request):
-    Favorite.objects.create(
+    fav = Favorite.objects.create(
         name = request.POST['name'],
         description = request.POST['description'],
         category = request.POST['category'],
-        favorite_image = request.POST['pic'],
+        favorite_image = request.FILES['pic'],
         address_id = Address.objects.create(street_address=request.POST['street'], city=request.POST['city'], state=request.POST['state'], zip_code=request.POST['zip'])
+    )
+    
+    Comment.objects.create(
+        comment = request.POST['comment'],
+        favorite_id_id = fav.id,
+        user_id_id = request.session['user_id']
     )
     return redirect('/dashboard')
 def logout(request):
@@ -73,8 +82,5 @@ def loginProcess(request):
         logedin_user_list = User.objects.filter(email=request.POST['email'])    
         request.session['first_name'] = logedin_user_list[0].first_name
         request.session['user_id'] = logedin_user_list[0].id
-        request.session['bio'] = logedin_user_list[0].bio
-        request.session['user_image'] = logedin_user_list[0].user_image
-
 
         return redirect("/dashboard")

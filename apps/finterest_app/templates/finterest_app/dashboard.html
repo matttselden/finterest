@@ -207,37 +207,27 @@
         </div>
         <div id="middle">
             <div id="profile">
-                <img src="{{ user.user_image.url }}" style="width:80px;height:80px;">
+                <img src="{{user.user_image.url}}" style="width:80px;height:80px;">
                 <div id="profile-right">
                     <h4>{{request.session.first_name}}'s Dashboard</h4>
-                    <p>{{request.session.bio}}</p>
+                    <p>{{user.bio}}</p>
                 </div>
             </div>
             <div class="row">
                 <div class="top">
                     <h5>FAVE To Do</h5>
-                    <a href="">Add</a>
+                    <a href="/addnewfave/">Add</a>
                     <a href="">More</a>
                 </div>
                 <div class="content">
+                    {% for activity in activities%}
                     <div class="box">
-                        <img src="https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png">
+                        <img src=" {{activity.favorite_image.url}} ">
                         <div class="desc">
-                            <p>This is the description section!</p>
+                            <p>{{ activity.comments.comment }}</p>
                         </div>
                     </div>
-                    <div class="box">
-                        <img src="https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png">
-                        <div class="desc">
-                            <p>This is the description section!</p>
-                        </div>
-                    </div>
-                    <div class="box">
-                        <img src="https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png">
-                        <div class="desc">
-                            <p>This is the description section!</p>
-                        </div>
-                    </div>
+                    {% endfor%}
                 </div>
             </div>
             <div class="row">

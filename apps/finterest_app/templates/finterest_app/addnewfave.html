@@ -173,7 +173,7 @@
         </div>
         <div id="middle">
             <h1>Add New Fave Item!</h1>
-            <form action="/createfave/" method="post">
+            <form action="/createfave/" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-group">
                     <label>Type of Fave:</label>
