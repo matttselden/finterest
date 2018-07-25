@@ -128,7 +128,7 @@
     <div id="main">
         <div id="nav">
             <nav class="navbar navbar-expand-lg navbar-light bg-light" class="nav">
-                <a class="navbar-brand" href="#">Finterest</a>
+                <a class="navbar-brand" href="/">Finterest</a>
             </nav>
         </div>  
             <!-- <div class="login"> -->
@@ -137,11 +137,21 @@
         <form class="form-group mb-5" action="/register/", method='post'>
                 {% csrf_token %} 
             <h5>Register</h5>
-
-
+                {% for message in messages %}
+                    {% if 'first_name' in message.extra_tags %}
+                    <p class="alert" role="alert">
+                        {{message}}
+                    </p>
+                    {% endif %}
+                {% endfor %}
             <label for="first_name">First name:</label>
-            <input type="text" class=" d-inline form-control" id="first_name" name="first_name"> <br>
-            
+            <input type="text" class=" d-inline form-control" id="first_name" name="first_name"
+            {% for message in messages %}
+                {% if 'fn_input' in message.extra_tags %}
+                    value='{{ message }}'
+                {% endif %}
+            {% endfor %}
+            > <br>
             <label for="last_name">Last name:</label>
             <input type="text" class=" d-inline form-control" id="last_name" name="last_name"><br>
             <label for="email">Email address:</label>
@@ -176,8 +186,7 @@
 
             <button class="btn btn-outline-success my-2 my-sm-0 dark" type="submit">Register</button>
                        
-        {% if messages %}
-                
+    {% if messages %}
         {% for message in messages %}
         <p class="alert" role="alert">
             {{message}}

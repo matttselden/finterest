@@ -4,21 +4,31 @@ from .models import *
 import bcrypt
 
 def index(request):
-    if 'user_id' not in request.session:
-        request.session['user_id'] = 0
     return render(request, 'finterest_app/index.html')
 
 def login(request):
     return render(request, 'finterest_app/login.html')
 
-def dashboard(request):
-    context = {
-      
-    }
-    return render(request, 'finterest_app/dashboard.html', context)
+def dashboard(request, idnumber):
+    if 'user_id' in request.session:
+        context = {
+            "users": User.objects.all(),
+            "dashuser": User.objects.get(id=idnumber),
+        }
+        return render(request, 'finterest_app/dashboard.html', context)
+    else:
+        messages.error(request, 'Must be logged in to view the dashboard', 'login')
+        return redirect('/login')
 
 def addnewfave(request):
-    return render(request, 'finterest_app/addnewfave.html')
+    if 'user_id' in request.session:
+        context = {
+            "users": User.objects.all(),
+        }
+        return render(request, 'finterest_app/addnewfave.html', context)
+    else:
+        messages.error(request, 'Must be logged in to view the dashboard', 'login')
+        return redirect('/login')
 
 def createfave(request):
     Favorite.objects.create(
@@ -28,7 +38,8 @@ def createfave(request):
         favorite_image = request.POST['pic'],
         address_id = Address.objects.create(street_address=request.POST['street'], city=request.POST['city'], state=request.POST['state'], zip_code=request.POST['zip'])
     )
-    return redirect('/dashboard')
+    return redirect('/dashboard/{{ request.session.user_id }}')
+
 def logout(request):
     request.session.clear()
     return redirect("/")    
@@ -41,7 +52,8 @@ def register(request):
     
     if len(errors):
         for key, value in errors.items():
-            messages.error(request, value)
+            messages.error(request, value, extra_tags = key)
+        messages.info(request, request.POST['first_name'], extra_tags = 'fn_input')
     #     request.session['first_name'] = request.POST['first_name']
     #     request.session['last_name'] = request.POST['last_name']
     #     request.session['email'] = request.POST['email']
@@ -59,7 +71,7 @@ def register(request):
         request.session['user_id'] = new_user.id
         request.session['first_name'] = new_user.first_name
         # Return to user dashboard
-        return redirect("/dashboard")
+        return redirect("/dashboard/{{ request.session.user_id }}")
 
 def loginProcess(request):
     errors = User.objects.login_validator(request.POST)
@@ -75,4 +87,10 @@ def loginProcess(request):
         request.session['user_id'] = logedin_user_list[0].id
         request.session['bio'] = logedin_user_list[0].bio
 
-        return redirect("/dashboard")
+        return redirect("/dashboard/{{ request.session.user_id }}")
+
+def follow(request, idnumber):
+    dashuser=User.objects.get(id=idnumber)
+    curruser=User.objects.get(id=request.session['user_id'])
+    Follower.objects.create(follower=curruser, followed=dashuser)
+    return redirect('/dashboard/'+idnumber)

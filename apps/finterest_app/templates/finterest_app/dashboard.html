@@ -136,10 +136,15 @@
         }
         div#profile h4{
             vertical-align: top;
-            width: 80%;
+            width: auto;
             color: #693C5C;
-
-
+            display: inline-block;
+            margin-right: 10px;
+        }
+        div#profile a{
+            vertical-align: middle;
+            background-color:#8BA258;
+            border: none;
         }
         div#profile p{
             color: #693C5C;
@@ -155,7 +160,7 @@
     <div id="main">
         <div id="nav">
             <nav class="navbar navbar-expand-lg navbar-light bg-light" class="nav">
-                <a class="navbar-brand" href="#">Finterest</a>
+                <a class="navbar-brand" href="/">Finterest</a>
                 <div id="search-left"></div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -170,14 +175,14 @@
 
                     <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="/dashboard/{{ request.session.user_id }}">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Minyu
+                        {{ request.session.first_name }}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Profile</a>
+                        <a class="dropdown-item" href="/dashboard/{{ request.session.user_id }}">Profile</a>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -191,26 +196,20 @@
         <div id="left">
             <b>Friends</b>
             <ul class="nav flex-column">
+                {% for user in users %}
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Liberty</a>
+                    <a class="nav-link active" href="/dashboard/{{ user.id }}">{{ user.first_name }} {{ user.last_name }}</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Matt</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Graham</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Reuben</a>
-                </li>
+                {% endfor %}
             </ul>
         </div>
         <div id="middle">
             <div id="profile">
                 <img src="https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png" style="width:80px;height:80px;">
                 <div id="profile-right">
-                    <h4>{{request.session.first_name}}'s Dashboard</h4>
-                    <p>{{request.session.bio}}</p>
+                    <h4>{{ dashuser.first_name }}'s Dashboard</h4>
+                    <a href='/follow/{{ dashuser.id }}/' class="btn btn-primary">Follow</a>
+                    <p>{{ dashuser.bio }}</p>
                 </div>
             </div>
             <div class="row">
