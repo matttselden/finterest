@@ -136,10 +136,12 @@
         }
         div#profile h4{
             vertical-align: top;
-            width: 80%;
+            width: auto;
             color: #693C5C;
-
-
+            display: inline-block;
+        }
+        div#profile a{
+            margin: 0px 0px 0px 0px;
         }
         div#profile p{
             color: #693C5C;
@@ -209,8 +211,9 @@
             <div id="profile">
                 <img src="https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png" style="width:80px;height:80px;">
                 <div id="profile-right">
-                    <h4>{{request.session.first_name}}'s Dashboard</h4>
-                    <p>{{request.session.bio}}</p>
+                    <h4>Matt{{request.session.first_name}}'s Dashboard</h4>
+                    <a href=#>Follow</a>
+                    <p>this is my bio{{request.session.bio}}</p>
                 </div>
             </div>
             <div class="row">
