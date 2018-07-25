@@ -44,7 +44,7 @@
             width: 15%;
             display: inline-block;
             border-right: 2px solid #F7F8F9;
-            height: 980px;
+            height: 960px;
             vertical-align: top;
             background-color: #8ba258;
         }
@@ -58,7 +58,7 @@
         div#right{
             width: 16%;
             display: inline-block;
-            height: 980px;
+            height: 960px;
             vertical-align: top;
             background-color: #8ba258;
 
@@ -78,7 +78,7 @@
 
         }
         div.row{
-            border: 1px solid red;
+            <!-- border: 1px solid red; -->
             height: 33%;
         }
         div.top a, div.top h5{
@@ -104,18 +104,16 @@
         div.top{
             width: 100%;
             height: 8%;
-            border-bottom: 1px solid red;
-            padding-right: 10px;
+            margin-right: 15px;
         }
         div.content{
             width: 100%;
             height: 100%;
-            border-bottom: 1px solid red;
+            <!-- border-bottom: 1px solid red; -->
         }
         div.box{
             width: 31%;
             height: 90%;
-            border: 1px solid red;
             display: inline-block;
             margin: 0px 5px;
             vertical-align: top;
@@ -123,7 +121,9 @@
         div.box img{
             height: 80%;
             width: 100%;
-            border-bottom: 1px solid gray;
+            border: 2px solid #C58094;
+            border-style: hidden;
+            border-radius: 3px;
         }
         div#profile img{
             display: inline-block;
@@ -153,6 +153,22 @@
         div#profile-right{
             display: inline-block;
             width: 80%;
+        }
+        div.desc p{
+            color: #693C5C;
+            font-weight: 500;
+            margin: 5px 10px;
+        }
+        div.desc p.title{
+            float: right;
+            border: 2px solid #C58094;
+            border-radius: 5px;
+            padding: 1px 3px;
+            margin-top: -5px;
+        }
+        div.top a{
+            color: #C58094;
+
         }
     </style>
 </head>
@@ -205,7 +221,7 @@
         </div>
         <div id="middle">
             <div id="profile">
-                <img src="{{user.user_image.url}}" style="width:80px;height:80px;">
+                <img src="{{dashuser.user_image.url}}" style="width:80px;height:80px;">
                 <div id="profile-right">
                     <h4>{{ dashuser.first_name }}'s Dashboard</h4>
                     <a href='/follow/{{ dashuser.id }}/' class="btn btn-primary">Follow</a>
@@ -221,9 +237,14 @@
                 <div class="content">
                     {% for activity in activities%}
                     <div class="box">
-                        <img src=" {{activity.favorite_image.url}} ">
+                        <img src=" {{activity.favorite_image.url}} " style="width:280px; height:200px;">
                         <div class="desc">
-                            <p>{{ activity.comments.comment }}</p>
+                            {% for comment in activity.comments.all %}
+                            {% if dashuser.id == comment.user_id.id %}
+                            <p>"{{ comment.comment }}"</p>
+                            {% endif %}
+                            {% endfor %}
+                            <p class="title">{{ activity.name }}</p>
                         </div>
                     </div>
                     {% endfor%}
@@ -232,55 +253,45 @@
             <div class="row">
                 <div class="top">
                     <h5>FAVE To Eat</h5>
-                    <a href="">Add</a>
+                    <a href="/addnewfave/">Add</a>
                     <a href="">More</a>
                 </div>
                 <div class="content">
+                    {% for restaurant in restaurants%}
                     <div class="box">
-                        <img src="https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png">
+                        <img src="{{restaurant.favorite_image.url}}" style="width:280px; height:200px;">
                         <div class="desc">
-                            <p>This is the description section!</p>
+                            {% for comment in restaurant.comments.all %}
+                            {% if dashuser.id == comment.user_id.id %}
+                            <p>"{{ comment.comment }}"</p>
+                            {% endif %}
+                            {% endfor %}
+                            <p class="title">{{ restaurant.name }}</p>
                         </div>
                     </div>
-                    <div class="box">
-                        <img src="https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png">
-                        <div class="desc">
-                            <p>This is the description section!</p>
-                        </div>
-                    </div>
-                    <div class="box">
-                        <img src="https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png">
-                        <div class="desc">
-                            <p>This is the description section!</p>
-                        </div>
-                    </div>
+                    {% endfor%}
                 </div>
             </div>
             <div class="row">
                 <div class="top">
                     <h5>FAVE Places</h5>
-                    <a href="">Add</a>
+                    <a href="/addnewfave/">Add</a>
                     <a href="">More</a>
                 </div>
                 <div class="content">
+                    {% for place in places%}
                     <div class="box">
-                        <img src="https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png">
+                        <img src="{{place.favorite_image.url}}" style="width:280px; height:200px;">
                         <div class="desc">
-                            <p>This is the description section!</p>
+                            {% for comment in place.comments.all %}
+                            {% if dashuser.id == comment.user_id.id %}
+                            <p>"{{ comment.comment }}"</p>
+                            {% endif %}
+                            {% endfor %}
+                            <p class="title">{{ place.name }}</p>
                         </div>
                     </div>
-                    <div class="box">
-                        <img src="https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png">
-                        <div class="desc">
-                            <p>This is the description section!</p>
-                        </div>
-                    </div>
-                    <div class="box">
-                        <img src="https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png">
-                        <div class="desc">
-                            <p>This is the description section!</p>
-                        </div>
-                    </div>
+                    {% endfor%}
                 </div>
             </div>
         </div>

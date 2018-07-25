@@ -14,8 +14,9 @@ def dashboard(request, idnumber):
         context = {
             "users": User.objects.all(),
             "dashuser": User.objects.get(id=idnumber),
-            'user': User.objects.get(id=request.session['user_id']),
-            'activities': Favorite.objects.filter(category='activity').order_by('-id')[:3],
+            'activities': Favorite.objects.filter(category='activity').filter(comments__user_id=idnumber).order_by('-id')[:3],
+            'restaurants': Favorite.objects.filter(category='restaurant').filter(comments__user_id=idnumber).order_by('-id')[:3],
+            'places': Favorite.objects.filter(category='place').filter(comments__user_id=idnumber).order_by('-id')[:3],
             'comments': Comment.objects.all()
         }
         return render(request, 'finterest_app/dashboard.html', context)
@@ -46,7 +47,7 @@ def createfave(request):
         favorite_id_id = fav.id,
         user_id_id = request.session['user_id']
     )
-    return redirect('/dashboard/{{ request.session.user_id }}')
+    return redirect("/dashboard/"+str(request.session['user_id']))
     
 def logout(request):
     request.session.clear()
@@ -79,7 +80,7 @@ def register(request):
         request.session['user_id'] = new_user.id
         request.session['first_name'] = new_user.first_name
         # Return to user dashboard
-        return redirect("/dashboard/{{ request.session.user_id }}")
+        return redirect("/dashboard/"+str(request.session['user_id']))
 
 def loginProcess(request):
     errors = User.objects.login_validator(request.POST)
@@ -94,7 +95,7 @@ def loginProcess(request):
         request.session['first_name'] = logedin_user_list[0].first_name
         request.session['user_id'] = logedin_user_list[0].id
 
-        return redirect("/dashboard/{{ request.session.user_id }}")
+        return redirect("/dashboard/"+str(request.session['user_id']))
 
 def follow(request, idnumber):
     dashuser=User.objects.get(id=idnumber)
