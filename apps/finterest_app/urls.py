@@ -9,6 +9,7 @@ urlpatterns=[
     url(r'^logout/$', views.logout),
     url(r'^dashboard/$', views.dashboard),
     url(r'^addnewfave/$', views.addnewfave),
+    url(r'^createfave/$', views.createfave),
     url(r'^register/$', views.register),
     url(r'^loginProcess/$', views.loginProcess),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
