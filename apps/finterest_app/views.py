@@ -13,7 +13,7 @@ def login(request):
 
 def dashboard(request):
     context = {
-      
+        'user': User.objects.get(id=request.session['user_id']),
     }
     return render(request, 'finterest_app/dashboard.html', context)
 
@@ -45,7 +45,7 @@ def register(request):
         # Hash password
         pw_hash = bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt())  
         # Create new user
-        new_user = User.objects.create(first_name=request.POST['first_name'], last_name=request.POST['last_name'], email=request.POST['email'], password=pw_hash, bio=request.POST['bio'], user_image=request.POST['user_image'], address_id = user_address)    
+        new_user = User.objects.create(first_name=request.POST['first_name'], last_name=request.POST['last_name'], email=request.POST['email'], password=pw_hash, bio=request.POST['bio'], user_image=request.FILES['user_image'], address_id = user_address)    
         # Save ID and first name to session
         request.session['user_id'] = new_user.id
         request.session['first_name'] = new_user.first_name
@@ -65,5 +65,7 @@ def loginProcess(request):
         request.session['first_name'] = logedin_user_list[0].first_name
         request.session['user_id'] = logedin_user_list[0].id
         request.session['bio'] = logedin_user_list[0].bio
+        request.session['user_image'] = logedin_user_list[0].user_image
+
 
         return redirect("/dashboard")

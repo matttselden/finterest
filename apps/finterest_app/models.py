@@ -60,7 +60,7 @@ class User(models.Model):
     last_name = models.CharField(max_length = 255)
     email = models.CharField(max_length = 255)
     password = models.CharField(max_length = 255)
-    user_image = models.ImageField(null=True)
+    user_image = models.ImageField(blank=True, upload_to='profile_image')
     bio = models.TextField(null=True)
     address_id = models.ForeignKey(Address, related_name = "user_id")
     created_at = models.DateTimeField(auto_now_add = True)
@@ -72,10 +72,11 @@ class Favorite(models.Model):
     name = models.CharField(max_length = 255)
     description = models.CharField(max_length = 255)
     category = models.CharField(max_length = 255)
-    favorite_image = models.ImageField()
+    favorite_image = models.ImageField(blank=True, upload_to='favorite_image')
     address_id = models.OneToOneField(User, related_name = "favorite_id")
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
+
 
 class Comment(models.Model):
     user_id = models.ForeignKey(User, related_name = "comments")
