@@ -20,6 +20,7 @@
         }
         .navbar{
             background-color: #693C5C !important;
+            border-bottom: 1px solid black;
         }
         .navbar-brand, a.nav-link{
             color: white !important;
@@ -46,6 +47,7 @@
             height: 1000px;
             vertical-align: top;
             background-color: #8ba258;
+            border-right: 1px solid black;
         }
         div#middle{
             width: 68%;
@@ -60,20 +62,16 @@
             height: 1000px;
             vertical-align: top;
             background-color: #8ba258;
+            border-left:1px solid black;
         }
         div#left b{
             color: white;
             margin: 15px;
 
         }
-        div#right b{
+        h4{
             color: white;
-            margin: 15px;
-        }
-        div#left li{
-            margin-bottom: -10px;
-            color: white !important;
-
+            margin: 5%;
         }
         #middle{
             padding: 5px 20px;
@@ -116,6 +114,16 @@
         .zip{
             width: 14%;
         }
+        h5{
+            color: white;
+            margin: 2% 10%;
+        }
+        .flex-column{
+            margin-left:10%;
+        }
+        .nav-link{
+            padding: 0%;
+        }
     </style>
 </head>
 <body>
@@ -155,9 +163,9 @@
             </nav>
         </div>
         <div id="left">
-            <b>Friends</b>
+            <h4>Following</h4>
             <ul class="nav flex-column">
-                {% for user in users %}
+                {% for user in following %}
                 <li class="nav-item">
                     <a class="nav-link active" href="/dashboard/{{ user.id }}">{{ user.first_name }} {{ user.last_name }}</a>
                 </li>
@@ -207,7 +215,24 @@
             </form>
         </div>
         <div id="right">
-            <b>Explore</b>
+            <h4>Explore</h4>
+            <h5>Users</h5>
+            <ul class="nav flex-column">
+                {% for user in users %}
+                <li class="nav-item">
+                    <a class="nav-link active" href="/dashboard/{{ user.id }}">{{ user.first_name }} {{ user.last_name }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+            <h5>Cities</h5>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" href=#>Seattle, WA</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href=#>San Jose, CA</a>
+                </li>
+            </ul>
         </div>
 
     </div>

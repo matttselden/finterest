@@ -14,10 +14,19 @@
     <style>
 
         /* Login/Register styling */
-        h5, p {
+        p {
             color: #693C5C;
         }
-
+        h3{
+            color: #693C5C;
+            margin-top:-57px;
+            background:#FAE9D9;
+            width: 106px;
+            margin-bottom:20px;
+        }
+        .logintitle{
+            width:82px;
+        }
         button.dark {
             color: #693C5C;
             border-color: #693C5C; 
@@ -29,8 +38,13 @@
 
         /* Original styling */
         form.form-group {
-            margin: 24px auto;
-            width: 40%;
+            display: inline-block;
+            vertical-align: top;
+            margin: 2% 3%;
+            width: 43%;
+            border: 2px solid #8ba258;
+            border-radius: 25px;
+            padding: 2%;
         }
         div#search-left{
             width: 40%;
@@ -40,6 +54,7 @@
         }
         .navbar{
             background-color: #693C5C !important;
+            border-bottom: 1px solid black;
         }
         .navbar-brand, a.nav-link{
             color: white !important;
@@ -67,6 +82,7 @@
             height: 800px;
             vertical-align: top;
             background-color: #8ba258;
+            border-right: 1px solid black;
         }
         div#middle{
             width: 68%;
@@ -81,6 +97,7 @@
             height: 800px;
             vertical-align: top;
             background-color: #8ba258;
+            border-left:1px solid black;
         }
         div#left b{
             color: white;
@@ -114,13 +131,36 @@
             margin: 2%;
             color: #693C5C
         }
-        div#middle form .btn-outline-success{
+        .btn-outline-success{
             color: #693C5C !important;
             border: 1px solid #693C5C !important;
-            margin-left: 90%;
+            margin-top:2% !important;
         }
-        .form-group{
-            margin-bottom: 3%;
+        .inline{
+            display: inline-block !important;
+        }
+        .city{
+            width: 55%;
+            margin-right: 3%;
+        }
+        .state{
+            width: 12%;
+            margin-right: 3%;
+        }
+        .zip{
+            width: 25%;
+        }
+        form label{
+            margin-top: 2%;
+            margin-bottom: 0%;
+        }
+        .form-text{
+            margin-top:0%;
+        }
+        .alert{
+            color: red;
+            margin:0%;
+            padding: 0% 2% !important;
         }
     </style>
 </head>
@@ -136,14 +176,7 @@
            
         <form class="form-group mb-5" action="/register/", method='post'>
                 {% csrf_token %} 
-            <h5>Register</h5>
-                {% for message in messages %}
-                    {% if 'first_name' in message.extra_tags %}
-                    <p class="alert" role="alert">
-                        {{message}}
-                    </p>
-                    {% endif %}
-                {% endfor %}
+            <h3>Register</h3>
             <label for="first_name">First name:</label>
             <input type="text" class=" d-inline form-control" id="first_name" name="first_name"
             {% for message in messages %}
@@ -152,28 +185,90 @@
                 {% endif %}
             {% endfor %}
             > <br>
+            {% for message in messages %}
+                {% if 'first_name' in message.extra_tags %}
+                <p class="alert" role="alert">
+                    {{message}}
+                </p>
+                {% endif %}
+            {% endfor %}
             <label for="last_name">Last name:</label>
-            <input type="text" class=" d-inline form-control" id="last_name" name="last_name"><br>
+            <input type="text" class=" d-inline form-control" id="last_name" name="last_name"
+            {% for message in messages %}
+                {% if 'ln_input' in message.extra_tags %}
+                    value='{{ message }}'
+                {% endif %}
+            {% endfor %}
+            ><br>
+            {% for message in messages %}
+                {% if 'last_name' in message.extra_tags %}
+                <p class="alert" role="alert">
+                    {{message}}
+                </p>
+                {% endif %}
+            {% endfor %}
             <label for="email">Email address:</label>
             <!-- changed from email to test my regex -->
-            <input type="email" class=" d-inline form-control" id="email" name="email"><br>
+            <input type="email" class=" d-inline form-control email" id="email" name="email"
+            {% for message in messages %}
+                {% if 'e_input' in message.extra_tags %}
+                    value='{{ message }}'
+                {% endif %}
+            {% endfor %}
+            ><br>
             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-
-            <label for="street_address">Address:</label>
-            <input type="text" class=" d-inline form-control" id="street_address" name="street_address"> <br>
-
-            <label for="city">City:</label>
-            <input type="text" class=" d-inline form-control" id="city" name="city"> <br>
-
-            <label for="state">State:</label>
-            <input type="text" class=" d-inline form-control" id="state" name="state"> <br>
-
-            <label for="zip_code">Zip Code:</label>
-            <input type="text" class=" d-inline form-control" id="zip_code" name="zip_code"> <br>
-            
+            {% for message in messages %}
+                {% if 'email' in message.extra_tags %}
+                <p class="alert" role="alert">
+                    {{message}}
+                </p>
+                {% endif %}
+            {% endfor %}
+            <label for="street_address">Street Address:</label>
+            <input type="text" class=" d-inline form-control" id="street_address" name="street_address"
+            {% for message in messages %}
+                {% if 'sa_input' in message.extra_tags %}
+                    value='{{ message }}'
+                {% endif %}
+            {% endfor %}
+            > <br>
+            <div>
+                <label for="city" class="inline city">City:</label>
+                <label for="state" class="inline state">State:</label>
+                <label for="zip_code" class="inline zip">Zip Code:</label>
+            </div>
+            <div>
+                <input type="text" class=" d-inline form-control inline city" id="city" name="city"
+                {% for message in messages %}
+                    {% if 'c_input' in message.extra_tags %}
+                        value='{{ message }}'
+                    {% endif %}
+                {% endfor %}
+                >
+                <input type="text" class=" d-inline form-control inline state" id="state" name="state"
+                {% for message in messages %}
+                    {% if 's_input' in message.extra_tags %}
+                        value='{{ message }}'
+                    {% endif %}
+                {% endfor %}
+                >
+                <input type="text" class=" d-inline form-control inline zip" id="zip_code" name="zip_code"
+                {% for message in messages %}
+                    {% if 'zc_input' in message.extra_tags %}
+                        value='{{ message }}'
+                    {% endif %}
+                {% endfor %}
+                >
+            </div>
             <label for="password">Password:</label>
             <input type="password" class="d-inline form-control" id="password" name="password" ><br>
-            
+            {% for message in messages %}
+                {% if 'password' in message.extra_tags %}
+                <p class="alert" role="alert">
+                    {{message}}
+                </p>
+                {% endif %}
+            {% endfor %}            
             <label for="confirm_password">Confirm password:</label>
             <input type="password" class="d-inline form-control" id="confirm_password" name="confirm_password"><br>
             
@@ -182,29 +277,33 @@
             <img href=#><br>
 
             <label for="bio" class="myform">Your bio:</label>
-            <textarea class="form-control" rows="3" name="bio" id="bio"></textarea><br>
-
-            <button class="btn btn-outline-success my-2 my-sm-0 dark" type="submit">Register</button>
-                       
-    {% if messages %}
-        {% for message in messages %}
-        <p class="alert" role="alert">
-            {{message}}
-        </p>
-        {% endfor %}
-    {% endif %}
+            <textarea class="form-control" rows="3" name="bio" id="bio">{% for message in messages %}{% if 'b_input' in message.extra_tags %}{{ message }}{% endif %}{% endfor %}</textarea>
+            <button class="btn my-2 my-sm-0 dark btn-outline-success" type="submit">Register</button>
         </form>
         
         <form action="/loginProcess/" class="form-group pb-5", method='post'>
             {% csrf_token %}
-            <h5>Log In</h5>
+            <h3 class="logintitle">Log In</h3>
             <label for="email">Email address:</label>
             <input type="email" class=" d-inline form-control" id="email" name="email"><br>
-            
+            {% for message in messages %}
+                {% if 'logine' in message.extra_tags %}
+                <p class="alert" role="alert">
+                    {{message}}
+                </p>
+                {% endif %}
+            {% endfor %}   
             
             <label for="password">Password:</label>
-            <input type="password" class="d-inline form-control mb-3" id="password" name="password" ><br>
-            <button class="btn btn-outline-success my-2 my-sm-0 dark mb-5" type="submit">Log In</button>
+            <input type="password" class="d-inline form-control" id="password" name="password" ><br>
+            {% for message in messages %}
+                {% if 'loginp' in message.extra_tags %}
+                <p class="alert" role="alert">
+                    {{message}}
+                </p>
+                {% endif %}
+            {% endfor %}   
+            <button class="btn my-2 my-sm-0 dark mb-5 btn-outline-success" type="submit">Log In</button>
             
         </form>
        
