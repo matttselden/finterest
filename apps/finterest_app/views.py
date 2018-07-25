@@ -14,6 +14,9 @@ def dashboard(request, idnumber):
         context = {
             "users": User.objects.all(),
             "dashuser": User.objects.get(id=idnumber),
+            'user': User.objects.get(id=request.session['user_id']),
+            'activities': Favorite.objects.filter(category='activity').order_by('-id')[:3],
+            'comments': Comment.objects.all()
         }
         return render(request, 'finterest_app/dashboard.html', context)
     else:
@@ -31,15 +34,20 @@ def addnewfave(request):
         return redirect('/login')
 
 def createfave(request):
-    Favorite.objects.create(
+    fav = Favorite.objects.create(
         name = request.POST['name'],
         description = request.POST['description'],
         category = request.POST['category'],
-        favorite_image = request.POST['pic'],
+        favorite_image = request.FILES['pic'],
         address_id = Address.objects.create(street_address=request.POST['street'], city=request.POST['city'], state=request.POST['state'], zip_code=request.POST['zip'])
     )
+    Comment.objects.create(
+        comment = request.POST['comment'],
+        favorite_id_id = fav.id,
+        user_id_id = request.session['user_id']
+    )
     return redirect('/dashboard/{{ request.session.user_id }}')
-
+    
 def logout(request):
     request.session.clear()
     return redirect("/")    
@@ -66,7 +74,7 @@ def register(request):
         # Hash password
         pw_hash = bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt())  
         # Create new user
-        new_user = User.objects.create(first_name=request.POST['first_name'], last_name=request.POST['last_name'], email=request.POST['email'], password=pw_hash, bio=request.POST['bio'], user_image=request.POST['user_image'], address_id = user_address)    
+        new_user = User.objects.create(first_name=request.POST['first_name'], last_name=request.POST['last_name'], email=request.POST['email'], password=pw_hash, bio=request.POST['bio'], user_image=request.FILES['user_image'], address_id = user_address)    
         # Save ID and first name to session
         request.session['user_id'] = new_user.id
         request.session['first_name'] = new_user.first_name
@@ -85,7 +93,6 @@ def loginProcess(request):
         logedin_user_list = User.objects.filter(email=request.POST['email'])    
         request.session['first_name'] = logedin_user_list[0].first_name
         request.session['user_id'] = logedin_user_list[0].id
-        request.session['bio'] = logedin_user_list[0].bio
 
         return redirect("/dashboard/{{ request.session.user_id }}")
 
