@@ -13,4 +13,9 @@ urlpatterns=[
     url(r'^register/$', views.register),
     url(r'^loginProcess/$', views.loginProcess),
     url(r'^follow/(?P<idnumber>\d+)/$', views.follow),
+    url(r'^dashboard/(?P<idnumber>\d+)/more_activity$', views.more_activity),
+    url(r'^dashboard/(?P<idnumber>\d+)/more_restaurant$', views.more_restaurant),
+    url(r'^dashboard/(?P<idnumber>\d+)/more_place$', views.more_place),
+
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

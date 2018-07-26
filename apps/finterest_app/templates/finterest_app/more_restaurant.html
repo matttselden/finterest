@@ -92,10 +92,13 @@
             width: 100%;
             height: 8%;
             margin-right: 15px;
+            padding-right: 3%
         }
         div.content{
             width: 100%;
             height: 100%;
+            <!-- border: 1px solid red; -->
+
         }
         div.box{
             width: 31%;
@@ -103,6 +106,8 @@
             display: inline-block;
             margin: 0px 5px;
             vertical-align: top;
+            <!-- border: 1px solid red; -->
+
         }
         div.box img{
             height: 80%;
@@ -155,14 +160,14 @@
             border-radius: 5px;
             padding: 1px 3px;
             margin-top: -5px;
-            vertical-align: bottom;
         }
         div.top a{
             color: #C58094;
+            margin-top: 5%;
         }
         h5{
             color: white;
-            margin: 2% 10%;
+            margin: 2% 0.5%;
         }
         .flex-column{
             margin-left:10%;
@@ -170,63 +175,6 @@
         .nav-link{
             padding: 0%;
         }
-        .popup {
-            position: relative;
-            display: inline-block;
-            cursor: pointer;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
-        /* The actual popup */
-        .popup .popuptext {
-            visibility: hidden;
-            width: 160px;
-            background-color: #555;
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 8px 0;
-            position: absolute;
-            z-index: 1;
-            bottom: 30%;
-            left: 50%;
-            margin-left: -80px;
-        }
-
-        /* Popup arrow */
-        .popup .popuptext::after {
-            content: "";
-            position: absolute;
-            top: 90%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: #555 transparent transparent transparent;
-        }
-
-        /* Toggle this class - hide and show the popup */
-        .popup .show {
-            visibility: visible;
-            -webkit-animation: fadeIn 1s;
-            animation: fadeIn 1s;
-        }
-
-        /* Add animation (fade in the popup) */
-        @-webkit-keyframes fadeIn {
-            from {opacity: 0;} 
-            to {opacity: 1;}
-        }
-
-        @keyframes fadeIn {
-            from {opacity: 0;}
-            to {opacity:1 ;}
-        }
-
-
     </style>
 </head>
 <body>
@@ -285,71 +233,25 @@
                     <p>{{ dashuser.bio }}</p>
                 </div>
             </div>
-            <div class="row">
-                <div class="top">
-                    <h5>FAVE To Do</h5>
-                    <a href="/addnewfave/">Add</a>
-                    <a href="/dashboard/{{ dashuser.id }}/more_activity">More</a>
-                </div>
-                <div class="content">
-                    {% for activity in activities%}
-                    <div class="box">
-                        <div class="pu popup"><span class="popuptext" id="myPopup{{activity.id}}">{{ activity.description }} <br /> {{ activity.address_id.street_address }} <br /> {{ activity.address_id.city }} {{ activity.address_id.state }} {{ activity.address_id.zip_code }}</span><img src=" {{activity.favorite_image.url}} " style="width:100%; height:240px;" onclick="myFunction({{activity.id}})"></div>
-                        <div class="desc">
-                            {% for comment in activity.comments.all %}
-                            {% if dashuser.id == comment.user_id.id %}
-                            <p class="comment">"{{ comment.comment }}"</p>
-                            {% endif %}
-                            {% endfor %}
-                            <p class="title" onclick="myFunction({{activity.id}})">{{ activity.name }}</p>
-                        </div>
+            <div class="top">
+                <h5>FAVE To Eat</h5>
+                <a href="/addnewfave/">Add</a>
+                <a href="/dashboard/{{ dashuser.id }}">Back</a>
+            </div><br><br><br>
+            <div class="content">
+                {% for restaurant in restaurants%}
+                <div class="box">
+                    <img src=" {{restaurant.favorite_image.url}} " style="width:280px; height:200px;">
+                    <div class="desc">
+                        {% for comment in restaurant.comments.all %}
+                        {% if dashuser.id == comment.user_id.id %}
+                        <p>"{{ comment.comment }}"</p>
+                        {% endif %}
+                        {% endfor %}
+                        <p class="title">{{ restaurant.name }}</p>
                     </div>
-                    {% endfor%}
                 </div>
-            </div>
-            <div class="row">
-                <div class="top">
-                    <h5>FAVE To Eat</h5>
-                    <a href="/addnewfave/">Add</a>
-                    <a href="/dashboard/{{ dashuser.id }}/more_restaurant">More</a>
-                </div>
-                <div class="content">
-                    {% for restaurant in restaurants %}
-                    <div class="box">
-                        <div class="pu popup"><span class="popuptext" id="myPopup{{restaurant.id}}">{{ restaurant.description }} <br /> {{ restaurant.address_id.street_address }} <br /> {{ restaurant.address_id.city }} {{ restaurant.address_id.state }} {{ restaurant.address_id.zip_code }}</span><img src=" {{restaurant.favorite_image.url}} " style="width:100%; height:240px;" onclick="myFunction({{restaurant.id}})"></div>
-                        <div class="desc">
-                            {% for comment in restaurant.comments.all %}
-                            {% if dashuser.id == comment.user_id.id %}
-                            <p class="comment">"{{ comment.comment }}"</p>
-                            {% endif %}
-                            {% endfor %}
-                            <p class="title" onclick="myFunction({{restaurant.id}})">{{ restaurant.name }}</p>
-                        </div>
-                    </div>
-                    {% endfor%}
-                </div>
-            </div>
-            <div class="row">
-                <div class="top">
-                    <h5>FAVE Places</h5>
-                    <a href="/addnewfave/">Add</a>
-                    <a href="/dashboard/{{ dashuser.id }}/more_place">More</a>
-                </div>
-                <div class="content">
-                    {% for place in places %}
-                    <div class="box">
-                        <div class="pu popup"><span class="popuptext" id="myPopup{{place.id}}">{{ place.description }} <br /> {{ place.address_id.street_address }} <br /> {{ place.address_id.city }} {{ place.address_id.state }} {{ place.address_id.zip_code }}</span><img src=" {{place.favorite_image.url}} " style="width:100%; height:240px;" onclick="myFunction({{place.id}})"></div>
-                        <div class="desc">
-                            {% for comment in restaurant.comments.all %}
-                            {% if dashuser.id == comment.user_id.id %}
-                            <p class="comment">"{{ comment.comment }}"</p>
-                            {% endif %}
-                            {% endfor %}
-                            <p class="title" onclick="myFunction({{restaurant.id}})">{{ restaurant.name }}</p>
-                        </div>
-                    </div>
-                    {% endfor%}
-                </div>
+                {% endfor%}
             </div>
         </div>
         <div id="right">
@@ -373,12 +275,5 @@
             </ul>
         </div>
     </div>
-    <script>
-
-        function myFunction(val) {
-            var popup = document.getElementById("myPopup"+val);
-            popup.classList.toggle("show");
-        }
-    </script>
 </body>
 </html>
