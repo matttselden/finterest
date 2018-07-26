@@ -131,7 +131,7 @@
             display: inline-block;
             margin-right: 10px;
         }
-        #followbutton{
+        div#profile a{
             vertical-align: middle;
             background-color:#8BA258;
             border: none;
@@ -169,11 +169,61 @@
         .nav-link{
             padding: 0%;
         }
-        #unfollowbutton{
-            vertical-align: middle;
-            background-color:#ff9900;
-            border: none;
-        }
+        /* .popup {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        } */
+
+        /* The actual popup */
+        /* .popup .popuptext {
+            visibility: hidden;
+            width: 160px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px 0;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -80px;
+        } */
+
+        /* Popup arrow */
+        /* .popup .popuptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #555 transparent transparent transparent;
+        } */
+
+        /* Toggle this class - hide and show the popup */
+        /* .popup .show {
+            visibility: visible;
+            -webkit-animation: fadeIn 1s;
+            animation: fadeIn 1s;
+        } */
+
+        /* Add animation (fade in the popup) */
+        /* @-webkit-keyframes fadeIn {
+            from {opacity: 0;} 
+            to {opacity: 1;}
+        } */
+
+        /* @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity:1 ;}
+        } */
     </style>
 </head>
 <body>
@@ -187,6 +237,12 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                    <div id="list-left"></div>
+
                     <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
                         <a class="nav-link" href="/dashboard/{{ request.session.user_id }}">Home <span class="sr-only">(current)</span></a>
@@ -196,7 +252,7 @@
                         {{ request.session.first_name }}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/editprofile">Edit Profile</a>
+                        <a class="dropdown-item" href="/dashboard/{{ request.session.user_id }}">Profile</a>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -222,16 +278,7 @@
                 <img src="{{dashuser.user_image.url}}" style="width:80px;height:80px;">
                 <div id="profile-right">
                     <h4>{{ dashuser.first_name }}'s Dashboard</h4>
-                    {% for user in users %}
-                        {% if dashuser.id == user.id %}
-                            <a href='/follow/{{ dashuser.id }}/' class="btn btn-primary" id="followbutton">Follow</a>
-                        {% endif %}
-                    {% endfor %}
-                    {% for user in following %}
-                        {% if dashuser.id == user.id %}
-                            <a href='/unfollow/{{ dashuser.id }}/' class="btn btn-primary" id="unfollowbutton">Unfollow</a>
-                        {% endif %}
-                    {% endfor %}
+                    <a href='/follow/{{ dashuser.id }}/' class="btn btn-primary" id="followbutton">Follow</a>
                     <p>{{ dashuser.bio }}</p>
                 </div>
             </div>
@@ -244,11 +291,10 @@
                 <div class="content">
                     {% for activity in activities%}
                     <div class="box">
-                        <!-- <a href="#popupBasic" data-rel="popup"><img src=" {{activity.favorite_image.url}} " style="width:280px; height:200px;" class="activitypic"></a>
-                        <div data-role="popup" id="popupBasic">
-                            <p>{{ activity.description }}</p>
-                            <p>{{ activity.address_id.street_address }}, {{ activity.address_id.city }}, {{ activity.address_id.state }} {{ activity.address_id.zip_code }}</p>
-                        </div>	 -->
+                        <img src=" {{activity.favorite_image.url}} " style="width:280px; height:200px;">
+                        <!-- <div class="popup" onclick="myFunction()">Click me to toggle the popup!
+                            <span class="popuptext" id="myPopup">A Simple Popup!</span> -->
+                        <!-- </div> -->
                         <div class="desc">
                             {% for comment in activity.comments.all %}
                             {% if dashuser.id == comment.user_id.id %}
@@ -324,8 +370,15 @@
                 <li class="nav-item">
                     <a class="nav-link active" href=#>San Jose, CA</a>
                 </li>
-            </ul>	
+            </ul>
         </div>
     </div>
+    <!-- <script>
+        // When the user clicks on div, open the popup
+        function myFunction() {
+            var popup = document.getElementById("myPopup");
+            popup.classList.toggle("show");
+        }
+    </script> -->
 </body>
 </html>

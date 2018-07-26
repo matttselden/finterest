@@ -13,6 +13,4 @@ urlpatterns=[
     url(r'^register/$', views.register),
     url(r'^loginProcess/$', views.loginProcess),
     url(r'^follow/(?P<idnumber>\d+)/$', views.follow),
-    url(r'^unfollow/(?P<idnumber>\d+)/$', views.unfollow),
-    url(r'^editprofile/$',views.editprofile)
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
