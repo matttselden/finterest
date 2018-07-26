@@ -131,11 +131,11 @@
             display: inline-block;
             margin-right: 10px;
         }
-        div#profile a{
+        /* div#profile a{
             vertical-align: middle;
             background-color:#8BA258;
             border: none;
-        }
+        } */
         div#profile p{
             color: #693C5C;
 
@@ -225,8 +225,16 @@
             from {opacity: 0;}
             to {opacity:1 ;}
         }
-
-
+        #unfollowbutton{
+            vertical-align: middle;
+            background-color:#ff9900;
+            border: none;
+        }
+        #followbutton{
+            vertical-align: middle;
+            background-color:#8BA258;
+            border: none;
+        }
     </style>
 </head>
 <body>
@@ -255,7 +263,7 @@
                         {{ request.session.first_name }}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/dashboard/{{ request.session.user_id }}">Profile</a>
+                            <a class="dropdown-item" href="/editprofile">Edit Profile</a>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -281,7 +289,16 @@
                 <img src="{{dashuser.user_image.url}}" style="width:80px;height:80px;">
                 <div id="profile-right">
                     <h4>{{ dashuser.first_name }}'s Dashboard</h4>
-                    <a href='/follow/{{ dashuser.id }}/' class="btn btn-primary" id="followbutton">Follow</a>
+                    {% for user in users %}
+                        {% if dashuser.id == user.id %}
+                            <a href='/follow/{{ dashuser.id }}/' class="btn btn-primary" id="followbutton">Follow</a>
+                        {% endif %}
+                    {% endfor %}
+                    {% for user in following %}
+                        {% if dashuser.id == user.id %}
+                            <a href='/unfollow/{{ dashuser.id }}/' class="btn btn-primary" id="unfollowbutton">Unfollow</a>
+                        {% endif %}
+                    {% endfor %}
                     <p>{{ dashuser.bio }}</p>
                 </div>
             </div>
