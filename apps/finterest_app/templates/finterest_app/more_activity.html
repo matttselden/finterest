@@ -92,10 +92,13 @@
             width: 100%;
             height: 8%;
             margin-right: 15px;
+            padding-right: 3%
         }
         div.content{
             width: 100%;
             height: 100%;
+            <!-- border: 1px solid red; -->
+
         }
         div.box{
             width: 31%;
@@ -103,6 +106,8 @@
             display: inline-block;
             margin: 0px 5px;
             vertical-align: top;
+            <!-- border: 1px solid red; -->
+
         }
         div.box img{
             height: 80%;
@@ -158,10 +163,11 @@
         }
         div.top a{
             color: #C58094;
+            margin-top: 5%;
         }
         h5{
             color: white;
-            margin: 2% 10%;
+            margin: 2% 0.5%;
         }
         .flex-column{
             margin-left:10%;
@@ -227,71 +233,25 @@
                     <p>{{ dashuser.bio }}</p>
                 </div>
             </div>
-            <div class="row">
-                <div class="top">
-                    <h5>FAVE To Do</h5>
-                    <a href="/addnewfave/">Add</a>
-                    <a href="/dashboard/{{ dashuser.id }}/more_activity">More</a>
-                </div>
-                <div class="content">
-                    {% for activity in activities%}
-                    <div class="box">
-                        <img src=" {{activity.favorite_image.url}} " style="width:280px; height:200px;">
-                        <div class="desc">
-                            {% for comment in activity.comments.all %}
-                            {% if dashuser.id == comment.user_id.id %}
-                            <p>"{{ comment.comment }}"</p>
-                            {% endif %}
-                            {% endfor %}
-                            <p class="title">{{ activity.name }}</p>
-                        </div>
+            <div class="top">
+                <h5>FAVE To Do</h5>
+                <a href="/addnewfave/">Add</a>
+                <a href="/dashboard/{{ dashuser.id }}">Back</a>
+            </div><br><br><br>
+            <div class="content">
+                {% for activity in activities%}
+                <div class="box">
+                    <img src=" {{activity.favorite_image.url}} " style="width:280px; height:200px;">
+                    <div class="desc">
+                        {% for comment in activity.comments.all %}
+                        {% if dashuser.id == comment.user_id.id %}
+                        <p>"{{ comment.comment }}"</p>
+                        {% endif %}
+                        {% endfor %}
+                        <p class="title">{{ activity.name }}</p>
                     </div>
-                    {% endfor%}
                 </div>
-            </div>
-            <div class="row">
-                <div class="top">
-                    <h5>FAVE To Eat</h5>
-                    <a href="/addnewfave/">Add</a>
-                    <a href="/dashboard/{{ dashuser.id }}/more_restaurant">More</a>
-                </div>
-                <div class="content">
-                    {% for restaurant in restaurants%}
-                    <div class="box">
-                        <img src="{{restaurant.favorite_image.url}}" style="width:280px; height:200px;">
-                        <div class="desc">
-                            {% for comment in restaurant.comments.all %}
-                            {% if dashuser.id == comment.user_id.id %}
-                            <p>"{{ comment.comment }}"</p>
-                            {% endif %}
-                            {% endfor %}
-                            <p class="title">{{ restaurant.name }}</p>
-                        </div>
-                    </div>
-                    {% endfor%}
-                </div>
-            </div>
-            <div class="row">
-                <div class="top">
-                    <h5>FAVE Places</h5>
-                    <a href="/addnewfave/">Add</a>
-                    <a href="/dashboard/{{ dashuser.id }}/more_place">More</a>
-                </div>
-                <div class="content">
-                    {% for place in places%}
-                    <div class="box">
-                        <img src="{{place.favorite_image.url}}" style="width:280px; height:200px;">
-                        <div class="desc">
-                            {% for comment in place.comments.all %}
-                            {% if dashuser.id == comment.user_id.id %}
-                            <p>"{{ comment.comment }}"</p>
-                            {% endif %}
-                            {% endfor %}
-                            <p class="title">{{ place.name }}</p>
-                        </div>
-                    </div>
-                    {% endfor%}
-                </div>
+                {% endfor%}
             </div>
         </div>
         <div id="right">

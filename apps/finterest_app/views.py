@@ -25,6 +25,45 @@ def dashboard(request, idnumber):
         messages.error(request, 'Must be logged in to view the dashboard', 'login')
         return redirect('/login')
 
+def more_activity(request, idnumber):
+    
+    context = {
+        "users": User.objects.exclude(followed_by__follower_id = request.session['user_id']).exclude(id=request.session['user_id']).all(),
+        "dashuser": User.objects.get(id=idnumber),
+        'activities': Favorite.objects.filter(category='activity').filter(comments__user_id=idnumber).order_by('-id'),
+        'restaurants': Favorite.objects.filter(category='restaurant').filter(comments__user_id=idnumber).order_by('-id')[:3],
+        'places': Favorite.objects.filter(category='place').filter(comments__user_id=idnumber).order_by('-id')[:3],
+        'comments': Comment.objects.all(),
+        'following': User.objects.filter(followed_by__follower_id = request.session['user_id']).all,
+    }
+    return render(request, 'finterest_app/more_activity.html', context)
+
+def more_restaurant(request, idnumber):
+    
+    context = {
+        "users": User.objects.exclude(followed_by__follower_id = request.session['user_id']).exclude(id=request.session['user_id']).all(),
+        "dashuser": User.objects.get(id=idnumber),
+        'activities': Favorite.objects.filter(category='activity').filter(comments__user_id=idnumber).order_by('-id'),
+        'restaurants': Favorite.objects.filter(category='restaurant').filter(comments__user_id=idnumber).order_by('-id')[:3],
+        'places': Favorite.objects.filter(category='place').filter(comments__user_id=idnumber).order_by('-id')[:3],
+        'comments': Comment.objects.all(),
+        'following': User.objects.filter(followed_by__follower_id = request.session['user_id']).all,
+    }
+    return render(request, 'finterest_app/more_restaurant.html', context)
+
+def more_place(request, idnumber):
+    
+    context = {
+        "users": User.objects.exclude(followed_by__follower_id = request.session['user_id']).exclude(id=request.session['user_id']).all(),
+        "dashuser": User.objects.get(id=idnumber),
+        'activities': Favorite.objects.filter(category='activity').filter(comments__user_id=idnumber).order_by('-id'),
+        'restaurants': Favorite.objects.filter(category='restaurant').filter(comments__user_id=idnumber).order_by('-id')[:3],
+        'places': Favorite.objects.filter(category='place').filter(comments__user_id=idnumber).order_by('-id')[:3],
+        'comments': Comment.objects.all(),
+        'following': User.objects.filter(followed_by__follower_id = request.session['user_id']).all,
+    }
+    return render(request, 'finterest_app/more_place.html', context)
+
 def addnewfave(request):
     if 'user_id' in request.session:
         context = {
