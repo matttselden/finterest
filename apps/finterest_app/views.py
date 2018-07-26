@@ -4,26 +4,21 @@ from .models import *
 import bcrypt
 
 def index(request):
-    if 'user_id' in request.session:
-        return redirect("/dashboard/"+str(request.session['user_id']))
-    else:
-        return render(request, 'finterest_app/index.html')
+    return render(request, 'finterest_app/index.html')
 
 def login(request):
-    # if 'user_id' in request.session:
-    #     return redirect("/dashboard/"+str(request.session['user_id']))
-    # else:
     return render(request, 'finterest_app/login.html')
 
 def dashboard(request, idnumber):
     if 'user_id' in request.session:
         context = {
-            "users": User.objects.exclude(followed_by__follower_id = request.session['user_id']).exclude(id=request.session['user_id']),
+            "users": User.objects.exclude(followed_by__follower_id = request.session['user_id']).exclude(id=request.session['user_id']).all(),
             "dashuser": User.objects.get(id=idnumber),
             'activities': Favorite.objects.filter(category='activity').filter(comments__user_id=idnumber).order_by('-id')[:3],
             'restaurants': Favorite.objects.filter(category='restaurant').filter(comments__user_id=idnumber).order_by('-id')[:3],
             'places': Favorite.objects.filter(category='place').filter(comments__user_id=idnumber).order_by('-id')[:3],
-            'following': User.objects.filter(followed_by__follower_id = request.session['user_id']),
+            'comments': Comment.objects.all(),
+            'following': User.objects.filter(followed_by__follower_id = request.session['user_id']).all,
         }
         return render(request, 'finterest_app/dashboard.html', context)
     else:
@@ -113,25 +108,3 @@ def follow(request, idnumber):
     curruser=User.objects.get(id=request.session['user_id'])
     Follower.objects.create(follower=curruser, followed=dashuser)
     return redirect('/dashboard/'+idnumber)
-
-def unfollow(request, idnumber):
-    dashuser=User.objects.get(id=idnumber)
-    curruser=User.objects.get(id=request.session['user_id'])
-    b = Follower.objects.get(follower=curruser, followed=dashuser)
-    b.delete()
-    return redirect('/dashboard/'+idnumber)
-
-def editprofile(request):
-    if 'user_id' in request.session:
-        context = {
-            "users": User.objects.exclude(followed_by__follower_id = request.session['user_id']).exclude(id=request.session['user_id']),
-            "dashuser": User.objects.get(id=request.session['user_id']),
-            'activities': Favorite.objects.filter(category='activity').filter(comments__user_id=request.session['user_id']).order_by('-id')[:3],
-            'restaurants': Favorite.objects.filter(category='restaurant').filter(comments__user_id=request.session['user_id']).order_by('-id')[:3],
-            'places': Favorite.objects.filter(category='place').filter(comments__user_id=request.session['user_id']).order_by('-id')[:3],
-            'following': User.objects.filter(followed_by__follower_id = request.session['user_id']),
-        }
-        return render(request, 'finterest_app/editprofile.html', context)
-    else:
-        messages.error(request, 'Must be logged in to view the dashboard', 'login')
-        return redirect('/login')
