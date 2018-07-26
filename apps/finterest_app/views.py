@@ -12,12 +12,13 @@ def login(request):
 def dashboard(request, idnumber):
     if 'user_id' in request.session:
         context = {
-            "users": User.objects.exclude(followed_by = request.session['user_id']).exclude(id=request.session['user_id']),
+            "users": User.objects.exclude(followed_by__follower_id = request.session['user_id']).exclude(id=request.session['user_id']).all(),
             "dashuser": User.objects.get(id=idnumber),
             'activities': Favorite.objects.filter(category='activity').filter(comments__user_id=idnumber).order_by('-id')[:3],
             'restaurants': Favorite.objects.filter(category='restaurant').filter(comments__user_id=idnumber).order_by('-id')[:3],
             'places': Favorite.objects.filter(category='place').filter(comments__user_id=idnumber).order_by('-id')[:3],
-            'comments': Comment.objects.all()
+            'comments': Comment.objects.all(),
+            'following': User.objects.filter(followed_by__follower_id = request.session['user_id']).all,
         }
         return render(request, 'finterest_app/dashboard.html', context)
     else:
@@ -27,9 +28,8 @@ def dashboard(request, idnumber):
 def addnewfave(request):
     if 'user_id' in request.session:
         context = {
-            "users": User.objects.exclude(followed_by = request.session['user_id']).exclude(id=request.session['user_id']),
-            "following": User.objects.filter(followed_by = request.session['user_id']),
-            
+            "users": User.objects.exclude(followed_by__follower_id = request.session['user_id']).exclude(id=request.session['user_id']),
+            "following": User.objects.filter(followed_by__follower_id = request.session['user_id']),
         }
         return render(request, 'finterest_app/addnewfave.html', context)
     else:
@@ -101,7 +101,6 @@ def loginProcess(request):
         logedin_user_list = User.objects.filter(email=request.POST['email'])    
         request.session['first_name'] = logedin_user_list[0].first_name
         request.session['user_id'] = logedin_user_list[0].id
-
         return redirect("/dashboard/"+str(request.session['user_id']))
 
 def follow(request, idnumber):
