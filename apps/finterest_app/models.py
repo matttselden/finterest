@@ -10,12 +10,12 @@ class UserManager(models.Manager):
         # first name validators
         if len(postData['first_name']) < 2:
             errors["first_name"] = "We need your first name please"
-        if not str.isalpha(postData['first_name']): 
-            errors["first_name_letter"] = "Your last name can only consist of letters"    
+        elif not str.isalpha(postData['first_name']): 
+            errors["first_name_letter"] = "Your first name can only consist of letters"    
         # last name validators
         if len(postData['last_name']) < 2:
             errors["last_name"] = "We need your last name please"
-        if not str.isalpha(postData['last_name']): 
+        elif not str.isalpha(postData['last_name']): 
             errors["last_name_letter"] = "Your last name can only consist of letters"     
         # email validators
         if not EMAIL_REGEX.match(postData['email']):
@@ -34,16 +34,13 @@ class UserManager(models.Manager):
     def login_validator(self, postData):
         errors = {}
         if len(postData['email']) < 1:
-            errors["email"] = "Please enter your email"
-            if len(postData['password']) < 1:
-                errors['password'] = "Please enter your password"  
-          
+            errors["logine"] = "Please enter your email"
+        if len(postData['password']) < 1:
+            errors['loginp'] = "Please enter your password"  
         else: 
             users_list = User.objects.filter(email= postData['email'])
-
             if (len(users_list) <  1) or not (bcrypt.checkpw(postData['password'].encode(), users_list[0].password.encode())):    
-                errors["password"] = "Your password or email is not correct"
-      
+                errors["loginp"] = "Your password or email is not correct"
         return errors
 
 

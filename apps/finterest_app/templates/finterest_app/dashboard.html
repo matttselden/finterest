@@ -11,6 +11,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <style>
         div#search-left{
             width: 40%;
@@ -20,6 +21,7 @@
         }
         .navbar{
             background-color: #693C5C !important;
+            border-bottom: 1px solid black;
         }
         .navbar-brand, a.nav-link{
             color: white !important;
@@ -47,12 +49,12 @@
             height: 960px;
             vertical-align: top;
             background-color: #8ba258;
+            border-right: 1px solid black;
         }
         div#middle{
             width: 68%;
             display: inline-block;
             height: auto;
-            border-right: 2px solid #F7F8F9;
             vertical-align: top;
         }
         div#right{
@@ -61,21 +63,7 @@
             height: 960px;
             vertical-align: top;
             background-color: #8ba258;
-
-        }
-        div#left b{
-            color: white;
-            margin: 15px;
-
-        }
-        div#right b{
-            color: white;
-            margin: 15px;
-        }
-        div#left li{
-            margin-bottom: -10px;
-            color: white !important;
-
+            border-left:1px solid black;
         }
         div.row{
             <!-- border: 1px solid red; -->
@@ -134,6 +122,10 @@
             margin-top: 5px;
 
         }
+        div#left h4, div#right h4{
+            color: white;
+            margin: 5%;
+        }
         div#profile h4{
             vertical-align: top;
             width: auto;
@@ -168,7 +160,16 @@
         }
         div.top a{
             color: #C58094;
-
+        }
+        h5{
+            color: white;
+            margin: 2% 10%;
+        }
+        .flex-column{
+            margin-left:10%;
+        }
+        .nav-link{
+            padding: 0%;
         }
     </style>
 </head>
@@ -210,9 +211,9 @@
             </nav>
         </div>
         <div id="left">
-            <b>Friends</b>
+            <h4>Following</h4>
             <ul class="nav flex-column">
-                {% for user in users %}
+                {% for user in following %}
                 <li class="nav-item">
                     <a class="nav-link active" href="/dashboard/{{ user.id }}">{{ user.first_name }} {{ user.last_name }}</a>
                 </li>
@@ -224,7 +225,7 @@
                 <img src="{{dashuser.user_image.url}}" style="width:80px;height:80px;">
                 <div id="profile-right">
                     <h4>{{ dashuser.first_name }}'s Dashboard</h4>
-                    <a href='/follow/{{ dashuser.id }}/' class="btn btn-primary">Follow</a>
+                    <a href='/follow/{{ dashuser.id }}/' class="btn btn-primary" id="followbutton">Follow</a>
                     <p>{{ dashuser.bio }}</p>
                 </div>
             </div>
@@ -296,10 +297,25 @@
             </div>
         </div>
         <div id="right">
-            <b>Explore</b>
+            <h4>Explore</h4>
+            <h5>Users</h5>
+            <ul class="nav flex-column">
+                {% for user in users %}
+                <li class="nav-item">
+                    <a class="nav-link active" href="/dashboard/{{ user.id }}">{{ user.first_name }} {{ user.last_name }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+            <h5>Cities</h5>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" href=#>Seattle, WA</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href=#>San Jose, CA</a>
+                </li>
+            </ul>
         </div>
-
     </div>
-    
 </body>
 </html>

@@ -12,7 +12,7 @@ def login(request):
 def dashboard(request, idnumber):
     if 'user_id' in request.session:
         context = {
-            "users": User.objects.all(),
+            "users": User.objects.exclude(followed_by = request.session['user_id']).exclude(id=request.session['user_id']),
             "dashuser": User.objects.get(id=idnumber),
             'activities': Favorite.objects.filter(category='activity').filter(comments__user_id=idnumber).order_by('-id')[:3],
             'restaurants': Favorite.objects.filter(category='restaurant').filter(comments__user_id=idnumber).order_by('-id')[:3],
@@ -27,7 +27,9 @@ def dashboard(request, idnumber):
 def addnewfave(request):
     if 'user_id' in request.session:
         context = {
-            "users": User.objects.all(),
+            "users": User.objects.exclude(followed_by = request.session['user_id']).exclude(id=request.session['user_id']),
+            "following": User.objects.filter(followed_by = request.session['user_id']),
+            
         }
         return render(request, 'finterest_app/addnewfave.html', context)
     else:
@@ -63,9 +65,14 @@ def register(request):
         for key, value in errors.items():
             messages.error(request, value, extra_tags = key)
         messages.info(request, request.POST['first_name'], extra_tags = 'fn_input')
-    #     request.session['first_name'] = request.POST['first_name']
-    #     request.session['last_name'] = request.POST['last_name']
-    #     request.session['email'] = request.POST['email']
+        messages.info(request, request.POST['last_name'], extra_tags = 'ln_input')
+        messages.info(request, request.POST['email'], extra_tags = 'e_input')
+        messages.info(request, request.POST['street_address'], extra_tags = 'sa_input')
+        messages.info(request, request.POST['city'], extra_tags = 'c_input')
+        messages.info(request, request.POST['state'], extra_tags = 's_input')
+        messages.info(request, request.POST['zip_code'], extra_tags = 'zc_input')
+        print(request.POST['bio'])
+        messages.info(request, request.POST['bio'], extra_tags = 'b_input')
         return redirect('/login')      
   
     # Create addres object
@@ -84,10 +91,10 @@ def register(request):
 
 def loginProcess(request):
     errors = User.objects.login_validator(request.POST)
-
+    print(errors)
     if len(errors):
         for key, value in errors.items():
-            messages.error(request, value)
+            messages.error(request, value, extra_tags = key)
         request.session['email'] = request.POST['email']
         return redirect('/login')
     else:    
