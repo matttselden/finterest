@@ -155,6 +155,7 @@
             border-radius: 5px;
             padding: 1px 3px;
             margin-top: -5px;
+            vertical-align: bottom;
         }
         div.top a{
             color: #C58094;
@@ -169,18 +170,18 @@
         .nav-link{
             padding: 0%;
         }
-        /* .popup {
-        position: relative;
-        display: inline-block;
-        cursor: pointer;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        } */
+        .popup {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
 
         /* The actual popup */
-        /* .popup .popuptext {
+        .popup .popuptext {
             visibility: hidden;
             width: 160px;
             background-color: #555;
@@ -190,40 +191,42 @@
             padding: 8px 0;
             position: absolute;
             z-index: 1;
-            bottom: 125%;
+            bottom: 30%;
             left: 50%;
             margin-left: -80px;
-        } */
+        }
 
         /* Popup arrow */
-        /* .popup .popuptext::after {
+        .popup .popuptext::after {
             content: "";
             position: absolute;
-            top: 100%;
+            top: 90%;
             left: 50%;
             margin-left: -5px;
             border-width: 5px;
             border-style: solid;
             border-color: #555 transparent transparent transparent;
-        } */
+        }
 
         /* Toggle this class - hide and show the popup */
-        /* .popup .show {
+        .popup .show {
             visibility: visible;
             -webkit-animation: fadeIn 1s;
             animation: fadeIn 1s;
-        } */
+        }
 
         /* Add animation (fade in the popup) */
-        /* @-webkit-keyframes fadeIn {
+        @-webkit-keyframes fadeIn {
             from {opacity: 0;} 
             to {opacity: 1;}
-        } */
+        }
 
-        /* @keyframes fadeIn {
+        @keyframes fadeIn {
             from {opacity: 0;}
             to {opacity:1 ;}
-        } */
+        }
+
+
     </style>
 </head>
 <body>
@@ -291,17 +294,14 @@
                 <div class="content">
                     {% for activity in activities%}
                     <div class="box">
-                        <img src=" {{activity.favorite_image.url}} " style="width:280px; height:200px;">
-                        <!-- <div class="popup" onclick="myFunction()">Click me to toggle the popup!
-                            <span class="popuptext" id="myPopup">A Simple Popup!</span> -->
-                        <!-- </div> -->
+                        <div class="pu popup"><span class="popuptext" id="myPopup{{activity.id}}">{{ activity.description }} <br /> {{ activity.address_id.street_address }} <br /> {{ activity.address_id.city }} {{ activity.address_id.state }} {{ activity.address_id.zip_code }}</span><img src=" {{activity.favorite_image.url}} " style="width:100%; height:240px;" onclick="myFunction({{activity.id}})"></div>
                         <div class="desc">
                             {% for comment in activity.comments.all %}
                             {% if dashuser.id == comment.user_id.id %}
-                            <p>"{{ comment.comment }}"</p>
+                            <p class="comment">"{{ comment.comment }}"</p>
                             {% endif %}
                             {% endfor %}
-                            <p class="title">{{ activity.name }}</p>
+                            <p class="title" onclick="myFunction({{activity.id}})">{{ activity.name }}</p>
                         </div>
                     </div>
                     {% endfor%}
@@ -314,16 +314,16 @@
                     <a href="">More</a>
                 </div>
                 <div class="content">
-                    {% for restaurant in restaurants%}
+                    {% for restaurant in restaurants %}
                     <div class="box">
-                        <img src="{{restaurant.favorite_image.url}}" style="width:280px; height:200px;">
+                        <div class="pu popup"><span class="popuptext" id="myPopup{{restaurant.id}}">{{ restaurant.description }} <br /> {{ restaurant.address_id.street_address }} <br /> {{ restaurant.address_id.city }} {{ restaurant.address_id.state }} {{ restaurant.address_id.zip_code }}</span><img src=" {{restaurant.favorite_image.url}} " style="width:100%; height:240px;" onclick="myFunction({{restaurant.id}})"></div>
                         <div class="desc">
                             {% for comment in restaurant.comments.all %}
                             {% if dashuser.id == comment.user_id.id %}
-                            <p>"{{ comment.comment }}"</p>
+                            <p class="comment">"{{ comment.comment }}"</p>
                             {% endif %}
                             {% endfor %}
-                            <p class="title">{{ restaurant.name }}</p>
+                            <p class="title" onclick="myFunction({{restaurant.id}})">{{ restaurant.name }}</p>
                         </div>
                     </div>
                     {% endfor%}
@@ -336,16 +336,16 @@
                     <a href="">More</a>
                 </div>
                 <div class="content">
-                    {% for place in places%}
+                    {% for place in places %}
                     <div class="box">
-                        <img src="{{place.favorite_image.url}}" style="width:280px; height:200px;">
+                        <div class="pu popup"><span class="popuptext" id="myPopup{{place.id}}">{{ place.description }} <br /> {{ place.address_id.street_address }} <br /> {{ place.address_id.city }} {{ place.address_id.state }} {{ place.address_id.zip_code }}</span><img src=" {{place.favorite_image.url}} " style="width:100%; height:240px;" onclick="myFunction({{place.id}})"></div>
                         <div class="desc">
-                            {% for comment in place.comments.all %}
+                            {% for comment in restaurant.comments.all %}
                             {% if dashuser.id == comment.user_id.id %}
-                            <p>"{{ comment.comment }}"</p>
+                            <p class="comment">"{{ comment.comment }}"</p>
                             {% endif %}
                             {% endfor %}
-                            <p class="title">{{ place.name }}</p>
+                            <p class="title" onclick="myFunction({{restaurant.id}})">{{ restaurant.name }}</p>
                         </div>
                     </div>
                     {% endfor%}
@@ -373,12 +373,12 @@
             </ul>
         </div>
     </div>
-    <!-- <script>
-        // When the user clicks on div, open the popup
-        function myFunction() {
-            var popup = document.getElementById("myPopup");
+    <script>
+
+        function myFunction(val) {
+            var popup = document.getElementById("myPopup"+val);
             popup.classList.toggle("show");
         }
-    </script> -->
+    </script>
 </body>
 </html>
