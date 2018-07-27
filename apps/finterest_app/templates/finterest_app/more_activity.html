@@ -46,7 +46,7 @@
             width: 15%;
             display: inline-block;
             border-right: 2px solid #F7F8F9;
-            height: 1200px;
+            height: 2000px;
             vertical-align: top;
             background-color: #8ba258;
             border-right: 1px solid black;
@@ -60,7 +60,7 @@
         div#right{
             width: 16%;
             display: inline-block;
-            height: 1200px;
+            height: 2000px;
             vertical-align: top;
             background-color: #8ba258;
             border-left:1px solid black;
@@ -168,6 +168,9 @@
         h5{
             color: white;
             margin: 2% 0.5%;
+        }
+        .rightwords{
+            margin: 2% 10%;
         }
         .flex-column{
             margin-left:10%;
@@ -329,7 +332,7 @@
         </div>
         <div id="right">
             <h4>Explore</h4>
-            <h5>Users</h5>
+            <h5 class="rightwords">Users</h5>
             <ul class="nav flex-column">
                 {% for user in users %}
                 <li class="nav-item">
@@ -337,7 +340,7 @@
                 </li>
                 {% endfor %}
             </ul>
-            <h5>Cities</h5>
+            <h5 class="rightwords">Cities</h5>
             <ul class="nav flex-column">
                 <li class="nav-item">
                     <a class="nav-link active" href=#>Seattle, WA</a>
