@@ -40,7 +40,7 @@
             font-size: smaller;
         }
         div#main{
-            background-color: #FAE9D9;
+            background: linear-gradient(to right,#CFCEA7, #FAE9D9, #CFCEA7);
         }
         div#left{
             width: 15%;
@@ -242,13 +242,25 @@
             background-color:#8BA258;
             border: none;
         }
+        .profilepic, .pu{
+            border-style: outset;
+            border-width: 5px;
+            border-color: #966287d9;
+        }
+        .profilepic{
+            border-radius:20px;
+        }
+        .navbar-brand{
+            font-family: "Comic Sans MS", cursive, sans-serif;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
     <div id="main">
         <div id="nav">
             <nav class="navbar navbar-expand-lg navbar-light bg-light" class="nav">
-                <a class="navbar-brand" href="/">Finterest</a>
+                <a class="navbar-brand" href="/">Trippin'</a>
                 <div id="search-left"></div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -293,7 +305,7 @@
         </div>
         <div id="middle">
             <div id="profile">
-                <img src="{{dashuser.user_image.url}}" style="width:80px;height:80px;">
+                <img class= "profilepic" src="{{dashuser.user_image.url}}" style="width:80px;height:80px;">
                 <div id="profile-right">
                     <h4>{{ dashuser.first_name }}'s Dashboard</h4>
                     {% for user in users %}
