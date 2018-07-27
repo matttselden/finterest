@@ -40,13 +40,13 @@
             font-size: smaller;
         }
         div#main{
-            background-color: #FAE9D9;
+            background: linear-gradient(to right,#CFCEA7, #FAE9D9, #CFCEA7);
         }
         div#left{
             width: 15%;
             display: inline-block;
             border-right: 2px solid #F7F8F9;
-            height: 1200px;
+            height: 2000px;
             vertical-align: top;
             background-color: #8ba258;
             border-right: 1px solid black;
@@ -60,7 +60,7 @@
         div#right{
             width: 16%;
             display: inline-block;
-            height: 1200px;
+            height: 2000px;
             vertical-align: top;
             background-color: #8ba258;
             border-left:1px solid black;
@@ -169,11 +169,90 @@
             color: white;
             margin: 2% 0.5%;
         }
+        .rightwords{
+            margin: 2% 10%;
+        }
         .flex-column{
             margin-left:10%;
         }
         .nav-link{
             padding: 0%;
+        }
+        .popup {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        /* The actual popup */
+        .popup .popuptext {
+            visibility: hidden;
+            width: 160px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px 0;
+            position: absolute;
+            z-index: 1;
+            bottom: 30%;
+            left: 50%;
+            margin-left: -80px;
+        }
+
+        /* Popup arrow */
+        .popup .popuptext::after {
+            content: "";
+            position: absolute;
+            top: 90%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #555 transparent transparent transparent;
+        }
+
+        /* Toggle this class - hide and show the popup */
+        .popup .show {
+            visibility: visible;
+            -webkit-animation: fadeIn 1s;
+            animation: fadeIn 1s;
+        }
+
+        /* Add animation (fade in the popup) */
+        @-webkit-keyframes fadeIn {
+            from {opacity: 0;} 
+            to {opacity: 1;}
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity:1 ;}
+        }
+        #unfollowbutton{
+            vertical-align: middle;
+            background-color:#ff9900;
+            border: none;
+        }
+        #followbutton{
+            vertical-align: middle;
+            background-color:#8BA258;
+            border: none;
+        }
+        .profilepic, .pu{
+            border-style: outset;
+            border-width: 5px;
+            border-color: #966287d9;
+        }
+        .profilepic{
+            border-radius:20px;
+        }
+        .navbar-brand{
+            font-family: "Comic Sans MS", cursive, sans-serif;
+            font-weight: 600;
         }
     </style>
 </head>
@@ -181,7 +260,7 @@
     <div id="main">
         <div id="nav">
             <nav class="navbar navbar-expand-lg navbar-light bg-light" class="nav">
-                <a class="navbar-brand" href="/">Finterest</a>
+                <a class="navbar-brand" href="/">Trippin'</a>
                 <div id="search-left"></div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -226,10 +305,19 @@
         </div>
         <div id="middle">
             <div id="profile">
-                <img src="{{dashuser.user_image.url}}" style="width:80px;height:80px;">
+                <img class= "profilepic" src="{{dashuser.user_image.url}}" style="width:80px;height:80px;">
                 <div id="profile-right">
                     <h4>{{ dashuser.first_name }}'s Dashboard</h4>
-                    <a href='/follow/{{ dashuser.id }}/' class="btn btn-primary" id="followbutton">Follow</a>
+                    {% for user in users %}
+                        {% if dashuser.id == user.id %}
+                            <a href='/follow/{{ dashuser.id }}/' class="btn btn-primary" id="followbutton">Follow</a>
+                        {% endif %}
+                    {% endfor %}
+                    {% for user in following %}
+                        {% if dashuser.id == user.id %}
+                            <a href='/unfollow/{{ dashuser.id }}/' class="btn btn-primary" id="unfollowbutton">Unfollow</a>
+                        {% endif %}
+                    {% endfor %}
                     <p>{{ dashuser.bio }}</p>
                 </div>
             </div>
@@ -241,14 +329,14 @@
             <div class="content">
                 {% for activity in activities%}
                 <div class="box">
-                    <img src=" {{activity.favorite_image.url}} " style="width:280px; height:200px;">
+                    <div class="pu popup"><span class="popuptext" id="myPopup{{activity.id}}">{{ activity.description }} <br /> {{ activity.address_id.street_address }} <br /> {{ activity.address_id.city }} {{ activity.address_id.state }} {{ activity.address_id.zip_code }}</span><img src=" {{activity.favorite_image.url}} " style="width:100%; height:240px;" onclick="myFunction({{activity.id}})"></div>
                     <div class="desc">
                         {% for comment in activity.comments.all %}
                         {% if dashuser.id == comment.user_id.id %}
-                        <p>"{{ comment.comment }}"</p>
+                        <p class="comment">"{{ comment.comment }}"</p>
                         {% endif %}
                         {% endfor %}
-                        <p class="title">{{ activity.name }}</p>
+                        <p class="title" onclick="myFunction({{activity.id}})">{{ activity.name }}</p>
                     </div>
                 </div>
                 {% endfor%}
@@ -256,7 +344,7 @@
         </div>
         <div id="right">
             <h4>Explore</h4>
-            <h5>Users</h5>
+            <h5 class="rightwords">Users</h5>
             <ul class="nav flex-column">
                 {% for user in users %}
                 <li class="nav-item">
@@ -264,7 +352,7 @@
                 </li>
                 {% endfor %}
             </ul>
-            <h5>Cities</h5>
+            <h5 class="rightwords">Cities</h5>
             <ul class="nav flex-column">
                 <li class="nav-item">
                     <a class="nav-link active" href=#>Seattle, WA</a>
@@ -275,5 +363,11 @@
             </ul>
         </div>
     </div>
+    <script>
+        function myFunction(val) {
+            var popup = document.getElementById("myPopup"+val);
+            popup.classList.toggle("show");
+        }
+    </script>
 </body>
 </html>
