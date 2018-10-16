@@ -1,2 +1,3 @@
 *.pyc
 djangoPy3Env/
+venv/
