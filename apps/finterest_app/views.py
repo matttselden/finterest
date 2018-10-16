@@ -163,15 +163,40 @@ def unfollow(request, idnumber):
 
 def editprofile(request):
     if 'user_id' in request.session:
+        dashuser=User.objects.get(id=request.session['user_id'])
         context = {
             "users": User.objects.exclude(followed_by__follower_id = request.session['user_id']).exclude(id=request.session['user_id']),
-            "dashuser": User.objects.get(id=request.session['user_id']),
+            "dashuser": dashuser,
+            "dashuseraddress": Address.objects.get(id = dashuser.address_id.id),
             'activities': Favorite.objects.filter(category='activity').filter(comments__user_id=request.session['user_id']).order_by('-id')[:3],
             'restaurants': Favorite.objects.filter(category='restaurant').filter(comments__user_id=request.session['user_id']).order_by('-id')[:3],
             'places': Favorite.objects.filter(category='place').filter(comments__user_id=request.session['user_id']).order_by('-id')[:3],
             'following': User.objects.filter(followed_by__follower_id = request.session['user_id']),
         }
+        thisaddress=Address.objects.get(id = dashuser.address_id.id)
+        print(thisaddress.street_address)
         return render(request, 'finterest_app/editprofile.html', context)
     else:
         messages.error(request, 'Must be logged in to view the dashboard', 'login')
         return redirect('/login')
+
+def updateprofile(request):
+    userid = request.session['user_id']
+    addressid = request.POST['addressid']
+    thisuser = User.objects.get(id = userid)
+    thisuser.first_name = request.POST['firstname']
+    thisuser.last_name = request.POST['lastname']
+    thisuser.email = request.POST['email']
+    thisuser.bio = request.POST['bio']
+    thisuser.save()
+    thisaddress = Address.objects.get(id = addressid)
+    thisaddress.street_address = request.POST['street_address']
+    thisaddress.city = request.POST['city']
+    thisaddress.state = request.POST['state']
+    thisaddress.zip_code = request.POST['zip_code']
+    thisaddress.save()
+    request.session['first_name']= request.POST['firstname']
+    return redirect('/dashboard/' + str(userid))
+
+
+    
