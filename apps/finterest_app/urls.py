@@ -17,7 +17,8 @@ urlpatterns=[
     url(r'^dashboard/(?P<idnumber>\d+)/more_restaurant$', views.more_restaurant),
     url(r'^dashboard/(?P<idnumber>\d+)/more_place$', views.more_place),
     url(r'^unfollow/(?P<idnumber>\d+)/$', views.unfollow),
-    url(r'^editprofile/$',views.editprofile)
+    url(r'^editprofile/$',views.editprofile),
+    url(r'^updateprofile/$', views.updateprofile)
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
