@@ -12,141 +12,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <style>
-        div#search-left{
-            width: 40%;
-        }
-        div#list-left{
-            width: 5%;
-        }
-        .navbar{
-            background-color: #693C5C !important;
-            border-bottom: 1px solid black;
-        }
-        .navbar-brand, a.nav-link{
-            color: white !important;
-            font-size: small !important;
-        }        
-        div#nav a{
-            font-size: large !important;
-        }
-        button.btn{
-            color: white !important;
-            border: 1px solid white !important;
-        }
-        ul.nav li.nav-item a{
-            color: white !important;
-            margin-left: 20px;
-            font-size: smaller;
-        }
-        div#main{
-            background-color: #FAE9D9;
-        }
-        div#left{
-            width: 15%;
-            display: inline-block;
-            height: 1000px;
-            vertical-align: top;
-            background-color: #8ba258;
-            border-right: 1px solid black;
-        }
-        div#middle{
-            width: 68%;
-            display: inline-block;
-            height: 1000px;
-            vertical-align: top;
-        }
-        div#right{
-            width: 16%;
-            display: inline-block;
-            height: 1000px;
-            vertical-align: top;
-            background-color: #8ba258;
-            border-left:1px solid black;
-        }
-        div#left b{
-            color: white;
-            margin: 15px;
-        }
-        h4{
-            color: white;
-            margin: 5%;
-        }
-        #middle{
-            padding: 5px 20px;
-        }
-        div.form-group textarea{
-            overflow-y: scroll;
-        }
-        div#middle form{
-            width: 80%;
-            margin: 3% 0% 0% 10%;
-            color: #693C5C;
-        }
-        div#middle h1{
-            margin: 2%;
-            color: #693C5C
-        }
-        div#middle form .btn-outline-success{
-            color: #693C5C !important;
-            border: 1px solid #693C5C !important;
-            margin-left: 90%;
-        }
-        .form-group{
-            margin-bottom: 3%;
-        }
-        .inline{
-            display: inline-block;
-        }
-        .street{
-            width: 40%;
-            margin-right: 3%;
-        }
-        .city{
-            width: 25%;
-            margin-right: 3%;
-        }
-        .state{
-            width: 8%;
-            margin-right: 3%;
-        }
-        .zip{
-            width: 14%;
-        }
-        h5{
-            color: white;
-            margin: 2% 10%;
-        }
-        .flex-column{
-            margin-left:10%;
-        }
-        .nav-link{
-            padding: 0%;
-        }
-        .inline{
-            display: inline-block !important;
-        }
-        .city{
-            width: 55%;
-            margin-right: 3%;
-        }
-        .state{
-            width: 12%;
-            margin-right: 3%;
-        }
-        .zip{
-            width: 25%;
-        }
-        .btn-outline-success{
-            color: #693C5C !important;
-            border: 1px solid #693C5C !important;
-            margin-top:2% !important;
-        }
-        .navbar-brand{
-            font-family: "Comic Sans MS", cursive, sans-serif;
-            font-weight: 600;
-        }
-    </style>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'finterest_app/css/editprofilestyling.css' %}">
 </head>
 <body>
     <div id="main">
@@ -159,10 +26,10 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <form class="form-inline my-2 my-lg-0">
+                    <!-- <form class="form-inline my-2 my-lg-0">
                         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                    </form>
+                    </form> -->
                     <div id="list-left"></div>
 
                     <ul class="navbar-nav mr-auto">
