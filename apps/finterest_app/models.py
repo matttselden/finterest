@@ -59,7 +59,7 @@ class User(models.Model):
     password = models.CharField(max_length = 255)
     user_image = models.ImageField(blank=True, upload_to='profile_image/')
     bio = models.TextField(null=True)
-    address_id = models.ForeignKey(Address, related_name = "user_id")
+    address_id = models.ForeignKey(Address, on_delete=models.DO_NOTHING, related_name = "user_id")
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
     objects = UserManager()
@@ -76,14 +76,14 @@ class Favorite(models.Model):
 
 
 class Comment(models.Model):
-    user_id = models.ForeignKey(User, related_name = "comments")
-    favorite_id = models.ForeignKey(Favorite, related_name = "comments")
+    user_id = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name = "comments")
+    favorite_id = models.ForeignKey(Favorite, on_delete=models.DO_NOTHING, related_name = "comments")
     comment = models.TextField(null=True)
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
 
 class Follower(models.Model):
-    follower = models.ForeignKey(User, related_name = "following")
-    followed = models.ForeignKey(User, related_name = "followed_by")
+    follower = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name = "following")
+    followed = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name = "followed_by")
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
