@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
+    <title>Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
     <script src="main.js"></script>
@@ -12,244 +12,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <style>
-        div#search-left{
-            width: 40%;
-        }
-        div#list-left{
-            width: 5%;
-        }
-        .navbar{
-            background-color: #693C5C !important;
-            border-bottom: 1px solid black;
-        }
-        .navbar-brand, a.nav-link{
-            color: white !important;
-            font-size: small !important;
-        }        
-        div#nav a{
-            font-size: large !important;
-        }
-        button.btn{
-            color: white !important;
-            border: 1px solid white !important;
-        }
-        ul.nav li.nav-item a{
-            color: white !important;
-            margin-left: 20px;
-            font-size: smaller;
-        }
-        div#main{
-            background: linear-gradient(to right,#CFCEA7, #FAE9D9, #CFCEA7);
-        }
-        div#left{
-            width: 15%;
-            display: inline-block;
-            height: 2000px;
-            vertical-align: top;
-            background-color: #8ba258;
-            border-right: 1px solid black;
-        }
-        div#middle{
-            width: 68%;
-            display: inline-block;
-            height: auto;
-            vertical-align: top;
-        }
-        div#right{
-            width: 16%;
-            display: inline-block;
-            height: 2000px;
-            vertical-align: top;
-            background-color: #8ba258;
-            border-left:1px solid black;
-        }
-        div.row{
-            height: 33%;
-        }
-        div.top a, div.top h5{
-            display: inline-block;
-        }
-        div.top h5{
-            float: left;
-            color: #693C5C;
-            font-weight: bold;
-        }
-        div.top a{
-            float: right;
-            margin-right: 5px;
-            font-size: small;
-            color: rgb(84, 55, 133);
-            margin-top: 5px;
-            font-weight: bold;
-            text-decoration: underline;
-        }
-        #middle{
-            padding: 5px 20px;
-        }
-        div.top{
-            width: 100%;
-            height: 8%;
-            margin-right: 15px;
-        }
-        div.content{
-            width: 100%;
-            height: 100%;
-        }
-        div.box{
-            width: 31%;
-            height: 90%;
-            display: inline-block;
-            margin: 0px 5px;
-            vertical-align: top;
-        }
-        div.box img{
-            height: 80%;
-            width: 100%;
-            border: 2px solid #C58094;
-            border-style: hidden;
-        }
-        div#profile img{
-            display: inline-block;
-            vertical-align: top;
-            margin-left: -10px;
-            margin-right: 10px;
-            margin-bottom: 10px;
-            margin-top: 5px;
-
-        }
-        div#left h4, div#right h4{
-            color: white;
-            margin: 5%;
-        }
-        div#profile h4{
-            vertical-align: top;
-            width: auto;
-            color: #693C5C;
-            display: inline-block;
-            margin-right: 10px;
-        }
-        /* div#profile a{
-            vertical-align: middle;
-            background-color:#8BA258;
-            border: none;
-        } */
-        div#profile p{
-            color: #693C5C;
-
-        }
-        div#profile-right{
-            display: inline-block;
-            width: 80%;
-        }
-        div.desc p{
-            color: #693C5C;
-            font-weight: 500;
-            margin: 5px 10px;
-        }
-        div.desc p.title{
-            float: right;
-            border: 2px solid #C58094;
-            border-radius: 5px;
-            padding: 1px 3px;
-            margin-top: -5px;
-            vertical-align: bottom;
-            font-family: "Comic Sans MS", cursive, sans-serif;
-        }
-        div.top a{
-            color: #C58094;
-        }
-        h5{
-            color: white;
-            margin: 2% 0.5%;
-        }
-        .rightwords{
-            margin: 2% 10%;
-        }
-        .flex-column{
-            margin-left:10%;
-        }
-        .nav-link{
-            padding: 0%;
-        }
-        .popup {
-            position: relative;
-            display: inline-block;
-            cursor: pointer;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
-        /* The actual popup */
-        .popup .popuptext {
-            visibility: hidden;
-            width: 160px;
-            background-color: #555;
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 8px 0;
-            position: absolute;
-            z-index: 1;
-            bottom: 30%;
-            left: 50%;
-            margin-left: -80px;
-        }
-
-        /* Popup arrow */
-        .popup .popuptext::after {
-            content: "";
-            position: absolute;
-            top: 90%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: #555 transparent transparent transparent;
-        }
-
-        /* Toggle this class - hide and show the popup */
-        .popup .show {
-            visibility: visible;
-            -webkit-animation: fadeIn 1s;
-            animation: fadeIn 1s;
-        }
-
-        /* Add animation (fade in the popup) */
-        @-webkit-keyframes fadeIn {
-            from {opacity: 0;} 
-            to {opacity: 1;}
-        }
-
-        @keyframes fadeIn {
-            from {opacity: 0;}
-            to {opacity:1 ;}
-        }
-        #unfollowbutton{
-            vertical-align: middle;
-            background-color:#ff9900;
-            border: none;
-        }
-        #followbutton{
-            vertical-align: middle;
-            background-color:#8BA258;
-            border: none;
-        }
-        .profilepic, .pu{
-            border-style: outset;
-            border-width: 5px;
-            border-color: #966287d9;
-        }
-        .profilepic{
-            border-radius:20px;
-        }
-        .navbar-brand{
-            font-family: "Comic Sans MS", cursive, sans-serif;
-            font-weight: 600;
-        }
-    </style>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'finterest_app/css/dashboardstyling.css' %}">
 </head>
 <body>
     <div id="main">
@@ -262,10 +26,10 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <form class="form-inline my-2 my-lg-0">
+                    <!-- <form class="form-inline my-2 my-lg-0">
                         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                    </form>
+                    </form> -->
                     <div id="list-left"></div>
 
                     <ul class="navbar-nav mr-auto">
@@ -392,15 +156,6 @@
                     <a class="nav-link active" href="/dashboard/{{ user.id }}">{{ user.first_name }} {{ user.last_name }}</a>
                 </li>
                 {% endfor %}
-            </ul>
-            <h5 class="rightwords">Cities</h5>
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a class="nav-link active" href=#>Seattle, WA</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href=#>San Jose, CA</a>
-                </li>
             </ul>
         </div>
     </div>

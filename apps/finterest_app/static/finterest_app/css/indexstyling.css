@@ -1,0 +1,46 @@
+        div#search-left{
+            width: 70%;
+        }
+        div#list-left{
+            width: 5%;
+        }
+        .navbar{
+            background-color: #693C5C !important;
+        }
+        .navbar-brand, a.nav-link{
+            color: white !important;
+            font-size: small !important;
+        }        
+        div#nav a{
+            font-size: large !important;
+        }
+        button.btn{
+            color: white !important;
+            border: 1px solid white !important;
+        }
+        ul.nav li.nav-item a{
+            color: white !important;
+            margin-left: 20px;
+            font-size: smaller;
+            border-radius: 2px;
+        }
+        #middle{
+            padding: 5px 20px;
+        }
+        div#carouselExampleIndicators{
+            width: 100%;
+        }
+        div.carousel-inner{
+            width: 96%;
+            margin: 2%;
+            border-radius: 12px;
+
+        }
+        div#main{
+            background-color: #FAE9D9;
+            height: 900px;
+        }
+        .navbar-brand{
+            font-family: "Comic Sans MS", cursive, sans-serif;
+            font-weight: 600;
+        }
